@@ -68,7 +68,7 @@
   // Create the anchor tag for the SMS widget
   const anchor = document.createElement('a');
   anchor.id = 'sellence-button';
-  anchor.href = isMobile ? `sms:${PHONE_NUMBER}&body=${MESSAGE_BODY}` : "#";
+  anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
   anchor.addEventListener('click', function () {
       if (!isMobile) {
         let qr = null;
