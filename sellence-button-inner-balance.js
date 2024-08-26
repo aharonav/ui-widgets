@@ -21,7 +21,7 @@
   const svgNS = "http://www.w3.org/2000/svg";
 
   // Constants can be changed to customize the SMS widget
-  const PHONE_NUMBER = '+14158494349';
+  const PHONE_NUMBER = '+12137996421';
   const MESSAGE_BODY = '';
   const BUTTON_TEXT = 'Text us';
   const TEXT_COLOR = '#FAFAFA';
