@@ -85,7 +85,7 @@
         const qrCodeViewComponent = document.querySelector('.qr-code-view');
         qrCodeViewComponent.innerHTML = '';
         qr = new QRCode(document.querySelector('.qr-code-view'), {
-          text: `sms:${PHONE_NUMBER}&body=`,
+          text: `sms:${PHONE_NUMBER}`,
           width: 200,
           height: 200,
           colorDark: QR_CODE_COLOR,
