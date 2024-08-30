@@ -147,7 +147,7 @@
   style.textContent = `
     #sellence-button {
         position: fixed;
-        bottom: ${isMobile ? `200px` : `20px`};
+        bottom: ${isMobile ? `140px` : `20px`};
         right: ${isMobile ? `auto` : `20px`};
         left: ${isMobile ? `20px` : `auto`};
         text-decoration: none;
