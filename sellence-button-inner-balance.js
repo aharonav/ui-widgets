@@ -161,6 +161,7 @@
         bottom: 20px;
         right: 20px;
         text-decoration: none;
+        z-index: 9999;
     }
     ${
     !isMobile
