@@ -7,6 +7,17 @@
     return regex.test(navigator.userAgent);
   }
 
+  const excludedUrls = [
+    'https://www.innerbalance.com/pre-questionnaire',
+  ];
+
+  function isPageExcluded(url) {
+    return excludedUrls.some((excludedUrl) => {
+      const regex = new RegExp(excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // Escape special characters in URL
+      return regex.test(url);
+    });
+  }
+
   const isMobile = detectDevice();
   // Load the Google Fonts asynchronously
   const fontLink = document.createElement("link");
@@ -147,9 +158,8 @@
   style.textContent = `
     #sellence-button {
         position: fixed;
-        bottom: ${isMobile ? `140px` : `20px`};
-        right: ${isMobile ? `auto` : `20px`};
-        left: ${isMobile ? `20px` : `auto`};
+        bottom: 20px;
+        right: 20px;
         text-decoration: none;
     }
     ${
@@ -241,6 +251,44 @@
       margin: auto;
     }
   `;
+  
+  function handleLocationChange() {
+    const existingButton = document.getElementById('sellence-button');
+
+    if (isMobile && isPageExcluded(window.location.href)) {
+      if (existingButton) {
+        existingButton.remove();
+      }
+    } else {
+      if (!existingButton) {
+        document.body.appendChild(anchor);
+      }
+    }
+  }
+  
   document.head.appendChild(style);
-  document.body.appendChild(anchor);
+  
+  // Initial check on page load
+  handleLocationChange();
+
+  // Listen for URL changes
+  window.addEventListener('popstate', handleLocationChange);
+  window.addEventListener('hashchange', handleLocationChange);
+
+  // In case of single-page applications or frameworks that use history.pushState
+  const originalPushState = history.pushState;
+  history.pushState = function (...args) {
+    originalPushState.apply(history, args);
+    handleLocationChange();
+  };
+
+  const originalReplaceState = history.replaceState;
+  history.replaceState = function (...args) {
+    originalReplaceState.apply(history, args);
+    handleLocationChange();
+  };
+  // if (!isMobile || (isMobile && !isPageExcluded(window.location.href))) {
+  //   document.body.appendChild(anchor);
+  // }
+
 })();
