@@ -1,4 +1,20 @@
 (function () {
+  // Google analytics
+  const gaScript = document.createElement("script");
+  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
+  gaScript.async = true;
+  document.head.appendChild(gaScript);
+
+  // Initialize Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-KRHR3HDKXQ', {
+    'page_path': window.location.pathname,
+  });
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
@@ -7,14 +23,29 @@
     return regex.test(navigator.userAgent);
   }
 
-  const excludedUrls = [
+  // Constants can be changed to customize the SMS widget
+  const PHONE_NUMBER = "+12137996421";
+  const MESSAGE_BODY = "";
+  const BUTTON_TEXT = "Text us";
+  const TEXT_COLOR = "#FAFAFA";
+  const BACKGROUND_COLOR = "#98622B";
+  const QR_CODE_COLOR = "#000000";
+  const EXCLUDED_URLS = [
     'https://www.innerbalance.com/pre-questionnaire',
   ];
 
   function isPageExcluded(url) {
-    return excludedUrls.some((excludedUrl) => {
+    return EXCLUDED_URLS.some((excludedUrl) => {
       const regex = new RegExp(excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // Escape special characters in URL
       return regex.test(url);
+    });
+  }
+  
+  function sendGoogleAnalyticsEvent() {
+    gtag('event', 'sms_button_click', {
+      'event_category': 'button',
+      'event_label': 'SMS Button Click',
+      'url': window.location.href,
     });
   }
 
@@ -32,14 +63,6 @@
   document.head.appendChild(qrScript);
 
   const svgNS = "http://www.w3.org/2000/svg";
-
-  // Constants can be changed to customize the SMS widget
-  const PHONE_NUMBER = "+12137996421";
-  const MESSAGE_BODY = "";
-  const BUTTON_TEXT = "Text us";
-  const TEXT_COLOR = "#FAFAFA";
-  const BACKGROUND_COLOR = "#98622B";
-  const QR_CODE_COLOR = "#000000";
 
   // Create QR code wrapper
   const qrWrapper = document.createElement("div");
@@ -81,8 +104,10 @@
   // Create the anchor tag for the SMS widget
   const anchor = document.createElement("a");
   anchor.id = "sellence-button";
-  anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
+  anchor.href = '#';
+  // anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
   anchor.addEventListener("click", function () {
+    sendGoogleAnalyticsEvent();
     if (!isMobile) {
       let qr = null;
       const buttonComponent = document.querySelector("#sellence-button");
@@ -105,6 +130,8 @@
         colorLight: TEXT_COLOR,
         correctLevel: QRCode.CorrectLevel.H,
       });
+    } else {
+      window.location.href = `sms:${PHONE_NUMBER}`;
     }
   });
 
@@ -252,7 +279,7 @@
       margin: auto;
     }
   `;
-  
+
   function handleLocationChange() {
     const existingButton = document.getElementById('sellence-button');
 
@@ -266,9 +293,9 @@
       }
     }
   }
-  
+
   document.head.appendChild(style);
-  
+
   // Initial check on page load
   handleLocationChange();
 
@@ -288,8 +315,4 @@
     originalReplaceState.apply(history, args);
     handleLocationChange();
   };
-  // if (!isMobile || (isMobile && !isPageExcluded(window.location.href))) {
-  //   document.body.appendChild(anchor);
-  // }
-
 })();

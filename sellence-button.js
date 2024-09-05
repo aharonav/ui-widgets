@@ -1,10 +1,52 @@
 (function () {
+  // Google analytics
+  const gaScript = document.createElement("script");
+  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
+  gaScript.async = true;
+  document.head.appendChild(gaScript);
+
+  // Initialize Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-KRHR3HDKXQ', {
+    'page_path': window.location.pathname,
+  });
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
     const regex =
       /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
     return regex.test(navigator.userAgent);
+  }
+
+  // Constants can be changed to customize the SMS widget
+  const PHONE_NUMBER = "+12137996421";
+  const MESSAGE_BODY = "";
+  const BUTTON_TEXT = "Text us";
+  const TEXT_COLOR = "#FAFAFA";
+  const BACKGROUND_COLOR = "#98622B";
+  const QR_CODE_COLOR = "#000000";
+  const EXCLUDED_URLS = [
+    'https://www.innerbalance.com/pre-questionnaire',
+  ];
+
+  function isPageExcluded(url) {
+    return EXCLUDED_URLS.some((excludedUrl) => {
+      const regex = new RegExp(excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // Escape special characters in URL
+      return regex.test(url);
+    });
+  }
+
+  function sendGoogleAnalyticsEvent() {
+    gtag('event', 'sms_button_click', {
+      'event_category': 'button',
+      'event_label': 'SMS Button Click',
+      'url': window.location.href,
+    });
   }
 
   const isMobile = detectDevice();
@@ -21,14 +63,6 @@
   document.head.appendChild(qrScript);
 
   const svgNS = "http://www.w3.org/2000/svg";
-
-  // Constants can be changed to customize the SMS widget
-  const PHONE_NUMBER = "+12137996421";
-  const MESSAGE_BODY = "";
-  const BUTTON_TEXT = "Text us";
-  const TEXT_COLOR = "#FAFAFA";
-  const BACKGROUND_COLOR = "#98622B";
-  const QR_CODE_COLOR = "#000000";
 
   // Create QR code wrapper
   const qrWrapper = document.createElement("div");
@@ -70,8 +104,10 @@
   // Create the anchor tag for the SMS widget
   const anchor = document.createElement("a");
   anchor.id = "sellence-button";
-  anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
+  anchor.href = '#';
+  // anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
   anchor.addEventListener("click", function () {
+    sendGoogleAnalyticsEvent();
     if (!isMobile) {
       let qr = null;
       const buttonComponent = document.querySelector("#sellence-button");
@@ -94,6 +130,8 @@
         colorLight: TEXT_COLOR,
         correctLevel: QRCode.CorrectLevel.H,
       });
+    } else {
+      window.location.href = `sms:${PHONE_NUMBER}`;
     }
   });
 
@@ -147,14 +185,14 @@
   style.textContent = `
     #sellence-button {
         position: fixed;
-        bottom: ${isMobile ? `200px` : `20px`};
-        right: ${isMobile ? `auto` : `20px`};
-        left: ${isMobile ? `20px` : `auto`};
+        bottom: 20px;
+        right: 20px;
         text-decoration: none;
+        z-index: 9999;
     }
     ${
-      !isMobile
-        ? `
+    !isMobile
+      ? `
     #wrap {
         width: 62px;
         height: 62px;
@@ -168,7 +206,7 @@
         transition: 300ms;
     }
     `
-        : `
+      : `
     #wrap {
       width: auto;
       padding: 0 20px;
@@ -183,7 +221,7 @@
       align-items: center;
     }
     `
-    }
+  }
     #wrap .text {
       color: ${TEXT_COLOR};
       font-size: 19px;
@@ -191,8 +229,8 @@
       font-family: 'Manrope', sans-serif;
     }
     ${
-      !isMobile
-        ? `
+    !isMobile
+      ? `
     #wrap:hover {
       width: auto;
       padding: 0 21px;
@@ -202,8 +240,8 @@
       display: inline;
     }
     `
-        : ""
-    }
+      : ""
+  }
     .qr-code-wrapper {
       height: 311px;
       width: 329px;
@@ -241,6 +279,40 @@
       margin: auto;
     }
   `;
+
+  function handleLocationChange() {
+    const existingButton = document.getElementById('sellence-button');
+
+    if (isMobile && isPageExcluded(window.location.href)) {
+      if (existingButton) {
+        existingButton.remove();
+      }
+    } else {
+      if (!existingButton) {
+        document.body.appendChild(anchor);
+      }
+    }
+  }
+
   document.head.appendChild(style);
-  document.body.appendChild(anchor);
+
+  // Initial check on page load
+  handleLocationChange();
+
+  // Listen for URL changes
+  window.addEventListener('popstate', handleLocationChange);
+  window.addEventListener('hashchange', handleLocationChange);
+
+  // In case of single-page applications or frameworks that use history.pushState
+  const originalPushState = history.pushState;
+  history.pushState = function (...args) {
+    originalPushState.apply(history, args);
+    handleLocationChange();
+  };
+
+  const originalReplaceState = history.replaceState;
+  history.replaceState = function (...args) {
+    originalReplaceState.apply(history, args);
+    handleLocationChange();
+  };
 })();
