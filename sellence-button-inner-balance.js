@@ -32,6 +32,7 @@
   const QR_CODE_COLOR = "#000000";
   const EXCLUDED_URLS = [
     'https://www.innerbalance.com/pre-questionnaire',
+    'https://www.innerbalance.com/onboarding-questionnaire',
   ];
 
   function isPageExcluded(url) {
