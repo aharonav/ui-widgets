@@ -10,10 +10,10 @@
   function gtag() {
     dataLayer.push(arguments);
   }
-  gtag('js', new Date());
+  gtag("js", new Date());
 
-  gtag('config', 'G-KRHR3HDKXQ', {
-    'page_path': window.location.pathname,
+  gtag("config", "G-KRHR3HDKXQ", {
+    page_path: window.location.pathname,
   });
   // Check if the device is mobile
   function detectDevice() {
@@ -31,22 +31,24 @@
   const BACKGROUND_COLOR = "#98622B";
   const QR_CODE_COLOR = "#000000";
   const EXCLUDED_URLS = [
-    'https://www.innerbalance.com/pre-questionnaire',
-    'https://www.innerbalance.com/onboarding-questionnaire',
+    "https://www.innerbalance.com/pre-questionnaire",
+    "https://www.innerbalance.com/onboarding-questionnaire",
   ];
 
   function isPageExcluded(url) {
     return EXCLUDED_URLS.some((excludedUrl) => {
-      const regex = new RegExp(excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // Escape special characters in URL
+      const regex = new RegExp(
+        excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      ); // Escape special characters in URL
       return regex.test(url);
     });
   }
-  
+
   function sendGoogleAnalyticsEvent() {
-    gtag('event', 'sms_button_click', {
-      'event_category': 'button',
-      'event_label': 'SMS Button Click',
-      'url': window.location.href,
+    gtag("event", "sms_button_click", {
+      event_category: "button",
+      event_label: "SMS Button Click",
+      url: window.location.href,
     });
   }
 
@@ -105,7 +107,7 @@
   // Create the anchor tag for the SMS widget
   const anchor = document.createElement("a");
   anchor.id = "sellence-button";
-  anchor.href = '#';
+  anchor.href = "#";
   // anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
   anchor.addEventListener("click", function () {
     sendGoogleAnalyticsEvent();
@@ -192,8 +194,8 @@
         z-index: 9999;
     }
     ${
-    !isMobile
-      ? `
+      !isMobile
+        ? `
     #wrap {
         width: 62px;
         height: 62px;
@@ -207,7 +209,7 @@
         transition: 300ms;
     }
     `
-      : `
+        : `
     #wrap {
       width: auto;
       padding: 0 20px;
@@ -222,7 +224,7 @@
       align-items: center;
     }
     `
-  }
+    }
     #wrap .text {
       color: ${TEXT_COLOR};
       font-size: 19px;
@@ -230,8 +232,8 @@
       font-family: 'Manrope', sans-serif;
     }
     ${
-    !isMobile
-      ? `
+      !isMobile
+        ? `
     #wrap:hover {
       width: auto;
       padding: 0 21px;
@@ -241,8 +243,8 @@
       display: inline;
     }
     `
-      : ""
-  }
+        : ""
+    }
     .qr-code-wrapper {
       height: 311px;
       width: 329px;
@@ -282,9 +284,9 @@
   `;
 
   function handleLocationChange() {
-    const existingButton = document.getElementById('sellence-button');
+    const existingButton = document.getElementById("sellence-button");
 
-    if (isMobile && isPageExcluded(window.location.href)) {
+    if (isPageExcluded(window.location.href)) {
       if (existingButton) {
         existingButton.remove();
       }
@@ -301,8 +303,8 @@
   handleLocationChange();
 
   // Listen for URL changes
-  window.addEventListener('popstate', handleLocationChange);
-  window.addEventListener('hashchange', handleLocationChange);
+  window.addEventListener("popstate", handleLocationChange);
+  window.addEventListener("hashchange", handleLocationChange);
 
   // In case of single-page applications or frameworks that use history.pushState
   const originalPushState = history.pushState;
