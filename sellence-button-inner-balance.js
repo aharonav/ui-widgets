@@ -33,6 +33,7 @@
   const EXCLUDED_URLS = [
     "https://www.innerbalance.com/pre-questionnaire",
     "https://www.innerbalance.com/onboarding-questionnaire",
+    "https://www.innerbalance.com/checkout",
   ];
 
   function isPageExcluded(url) {
