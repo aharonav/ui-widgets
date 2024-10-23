@@ -1,6 +1,7 @@
 (function () {
   const MINUTES = 1000 * 60;
   // Constants can be changed to customize the SMS widget
+  const START_AFTER = 15; // minutes
   const TITLE = "Signup now<br>to unlock 10% back";
   const END_TITLE = "Thank you!";
   const SUBTITLE = "A message with the code<br>has been sent to you";
@@ -129,21 +130,45 @@
   note.className = "note";
   note.innerHTML = NOTE_TEXT;
 
-
   // Create button
   const button = document.createElement("button");
   button.className = "button";
   button.textContent = BUTTON_TEXT;
   button.addEventListener("click", () => {
     if (!input.value || !isValidPhoneNumber(input.value)) {
+      input.style.borderColor = ERROR_COLOR;
+      error.style.visibility = "visible";
       return;
     }
     send(input.value);
   });
 
   // Create close button
-  const closeButton = document.createElement("button");
-  closeButton.className = "button";
+  const closeButton = document.createElementNS(svgNS, "svg");
+  closeButton.id = "sellence-close-button";
+  closeButton.setAttribute("width", "16");
+  closeButton.setAttribute("height", "16");
+  closeButton.setAttribute("viewBox", "0 0 16 16");
+  closeButton.setAttribute("fill", "none");
+  
+  const path1 = document.createElementNS(svgNS, "path");
+  path1.setAttribute("d", "M12 4L3 13");
+  path1.setAttribute("stroke", "#C1C1C1");
+  path1.setAttribute("stroke-width", "1.45946");
+  path1.setAttribute("stroke-linecap", "round");
+  path1.setAttribute("stroke-linejoin", "round");
+  const path2 = document.createElementNS(svgNS, "path");
+  path2.setAttribute("d", "M3 4L12 13");
+  path2.setAttribute("stroke", "#C1C1C1");
+  path2.setAttribute("stroke-width", "1.45946");
+  path2.setAttribute("stroke-linecap", "round");
+  path2.setAttribute("stroke-linejoin", "round");
+  
+  closeButton.appendChild(path1);
+  closeButton.appendChild(path2);
+  closeButton.addEventListener("click", () => {
+    popUpWrapper.remove();
+  });
 
   // Create the popup window
   const popUpWindow = document.createElement("div");
@@ -152,6 +177,7 @@
   popUpWindow.appendChild(inputContainer);
   popUpWindow.appendChild(note);
   popUpWindow.appendChild(button);
+  popUpWindow.appendChild(closeButton);
 
   // Create the popup wrapper
   const popUpWrapper = document.createElement("div");
@@ -175,6 +201,7 @@
       background-color: ${WRAPPER_BACKGROUND_COLOR};
     }
     #sellence-popup {
+      position: relative;
       height: ${isMobile ? `332px` : `415px`};
       width: ${isMobile ? `435px` : `456px`};
       border-radius: 24px;
@@ -184,6 +211,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 84px 24px 40px 24px;
+    }
+    #sellence-close-button {
+      position: absolute;
+      top: 27px;
+      right: 24px;
+      cursor: pointer;
     }
     .title-container {
       display: flex;
@@ -260,6 +293,7 @@
       font-weight: 500;
       color: ${BUTTON_TEXT_COLOR};
       background-color: ${BUTTON_COLOR};
+      cursor: pointer;
     }
     .note {
       display: inline-block;
@@ -289,7 +323,7 @@
   document.head.appendChild(style);
 
   // Initial check on page load
-  setTimeout(handleLocationChange, 15 * MINUTES);
+  setTimeout(handleLocationChange, START_AFTER * MINUTES);
 
   // Listen for URL changes
   window.addEventListener("popstate", handleLocationChange);
