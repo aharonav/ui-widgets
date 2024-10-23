@@ -10,7 +10,7 @@
   // Constants can be changed to customize the SMS widget
   const TITLE = "Signup now<br>to unlock 10% back";
   const END_TITLE = "Thank you!";
-  const SUBTITLE = "A message with the code has been sent to you";
+  const SUBTITLE = "A message with the code<br>has been sent to you";
   const INPUT_PLACEHOLDER = "Enter your phone number";
   const NOTE_TEXT = "*By  clicking ‘Unlock my 10% back’, you agree to recieve SMS messages from inner balance.<br>View our full Terms & Conditions and Privacy Policy."
   const BUTTON_TEXT = "Unlock my 10% back";
@@ -35,12 +35,28 @@
       return regex.test(url);
     });
   }
+  
+  function isValidPhoneNumber(phoneNumber) {
+    const pattern = new RegExp(/^\d{10}$/);
+    return pattern.test(phoneNumber);
+  }
+  
+  function send(phoneNumber) {
+    // TODO: Send the phone number to the backend
+    title.innerHTML = END_TITLE;
+    inputContainer.remove();
+    subtitle.style.display = "inline-block";
+    button.textContent = END_BUTTON_TEXT;
+    button.addEventListener("click", () => {
+      popUpWrapper.remove();
+    });
+    note.remove();
+    titleContainer.style.marginTop = "100px";
+  }
 
   const isMobile = detectDevice();
   const svgNS = "http://www.w3.org/2000/svg";
 
-  let isError = false;
-  
   // Load the Google Fonts asynchronously
   const fontLink = document.createElement("link");
   fontLink.href = "https://fonts.googleapis.com/css?family=Poppins";
@@ -51,6 +67,16 @@
   const title = document.createElement("span");
   title.className = "title";
   title.innerHTML = TITLE;
+
+  // Create subtitle
+  const subtitle = document.createElement("span");
+  subtitle.className = "subtitle";
+  subtitle.innerHTML = SUBTITLE;
+  
+  const titleContainer = document.createElement("div");
+  titleContainer.className = "title-container";
+  titleContainer.appendChild(title);
+  titleContainer.appendChild(subtitle);
 
   // Create input title
   const inputTitle = document.createElement("span");
@@ -63,19 +89,23 @@
   input.type = "tel";
   input.placeholder = INPUT_PLACEHOLDER;
   input.addEventListener("input", () => {
-    isError = false;
     input.style.borderColor = INPUT_COLOR;
     error.style.visibility = "hidden";
-    // TODO: Add phone number validation
     if (input.value) {
       inputTitle.style.visibility = "visible";
+      if (!isValidPhoneNumber(input.value)) {
+        input.style.borderColor = ERROR_COLOR;
+        error.style.visibility = "visible";
+      }
     } else {
       inputTitle.style.visibility = "hidden";
+      error.style.visibility = "hidden";
+      input.style.borderColor = INPUT_COLOR;
     }
+
   });
   input.addEventListener("focus", () => {
     input.style.borderColor = TITLE_COLOR;
-    isError = false;
     error.style.visibility = "hidden";
   });
   
@@ -92,15 +122,21 @@
   inputContainer.appendChild(error);
   
   // Create note text
-  
   const note = document.createElement("span");
   note.className = "note";
   note.innerHTML = NOTE_TEXT;
+
   
   // Create button
   const button = document.createElement("button");
   button.className = "button";
   button.textContent = BUTTON_TEXT;
+  button.addEventListener("click", () => {
+    if (!input.value || !isValidPhoneNumber(input.value)) {
+      return;
+    }
+    send(input.value);
+  });
   
   // Create close button
   const closeButton = document.createElement("button");
@@ -109,7 +145,7 @@
   // Create the popup window
   const popUpWindow = document.createElement("div");
   popUpWindow.id = "sellence-popup";
-  popUpWindow.appendChild(title);
+  popUpWindow.appendChild(titleContainer);
   popUpWindow.appendChild(inputContainer);
   popUpWindow.appendChild(note);
   popUpWindow.appendChild(button);
@@ -146,6 +182,14 @@
       align-items: center;
       padding: 84px 24px 40px 24px;
     }
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      gap: 8px;
+    }
     .title {
       display: inline-block;
       font-family: 'Poppins', sans-serif;
@@ -154,6 +198,14 @@
       color: ${TITLE_COLOR};
       text-align: center;
       line-height: 32px;
+    }
+    .subtitle {
+      display: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: ${TITLE_COLOR};
+      text-align: center;
     }
     .input-container {
       display: flex;
@@ -178,6 +230,7 @@
       width: 100%;
       border-radius: 8px;
       border: 1px solid ${INPUT_COLOR};
+      outline: none;
       padding: 0 14px;
       font-family: 'Poppins', sans-serif;
       font-size: 14px;
