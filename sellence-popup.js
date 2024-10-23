@@ -19,15 +19,6 @@
   const BUTTON_TEXT_COLOR = "#FFFFFF";
   const ERROR_COLOR = "#F63C45";
 
-  const EXCLUDED_URLS = [];
-
-  function isPageExcluded(url) {
-    return EXCLUDED_URLS.some((excludedUrl) => {
-      const regex = new RegExp(excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),); // Escape special characters in URL
-      return regex.test(url);
-    });
-  }
-
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
