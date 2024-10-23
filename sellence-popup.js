@@ -1,12 +1,5 @@
 (function () {
-  // Check if the device is mobile
-  function detectDevice() {
-    let ch = false;
-    const regex =
-      /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return regex.test(navigator.userAgent);
-  }
-
+  const MINUTES = 1000 * 60;
   // Constants can be changed to customize the SMS widget
   const TITLE = "Signup now<br>to unlock 10% back";
   const END_TITLE = "Thank you!";
@@ -34,6 +27,14 @@
       ); // Escape special characters in URL
       return regex.test(url);
     });
+  }
+
+  // Check if the device is mobile
+  function detectDevice() {
+    let ch = false;
+    const regex =
+      /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
   }
   
   function isValidPhoneNumber(phoneNumber) {
@@ -286,7 +287,7 @@
   document.head.appendChild(style);
 
   // Initial check on page load
-  handleLocationChange();
+  setTimeout(handleLocationChange, 15 * MINUTES);
 
   // Listen for URL changes
   window.addEventListener("popstate", handleLocationChange);
