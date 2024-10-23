@@ -9,7 +9,7 @@
   const BUTTON_TEXT = "Unlock my 10% back";
   const END_BUTTON_TEXT = "Got it";
   const ERROR_MESSAGE = "Please enter a valid phone number";
-  
+
   const POPUP_BACKGROUND_COLOR = "#FFFFFF";
   const WRAPPER_BACKGROUND_COLOR = "#00000073";
   const TITLE_COLOR = "#434343";
@@ -22,9 +22,7 @@
 
   function isPageExcluded(url) {
     return EXCLUDED_URLS.some((excludedUrl) => {
-      const regex = new RegExp(
-        excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-      ); // Escape special characters in URL
+      const regex = new RegExp(excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),); // Escape special characters in URL
       return regex.test(url);
     });
   }
@@ -32,16 +30,20 @@
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
-    const regex =
-      /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
     return regex.test(navigator.userAgent);
   }
-  
+
   function isValidPhoneNumber(phoneNumber) {
-    const pattern = new RegExp(/^\d{10}$/);
-    return pattern.test(phoneNumber);
+    const pattern1 = new RegExp(/^\d{10}$/);
+    const pattern2 = new RegExp(/^\d{3}-\d{3}-\d{4}$/);
+    const pattern3 = new RegExp(/^\d{3} \d{3} \d{4}$/);
+    const pattern4 = new RegExp(/^\d{3}\.\d{3}\.\d{4}$/);
+    const pattern5 = new RegExp(/^\+1 \d{3}-\d{3}-\d{4}$/);
+    const pattern6 = new RegExp(/^\+1 \d{3} \d{3} \d{4}$/);
+    return pattern1.test(phoneNumber) || pattern2.test(phoneNumber) || pattern3.test(phoneNumber) || pattern4.test(phoneNumber) || pattern5.test(phoneNumber) || pattern6.test(phoneNumber);
   }
-  
+
   function send(phoneNumber) {
     // TODO: Send the phone number to the backend
     title.innerHTML = END_TITLE;
@@ -63,7 +65,7 @@
   fontLink.href = "https://fonts.googleapis.com/css?family=Poppins";
   fontLink.rel = "stylesheet";
   document.head.appendChild(fontLink);
-  
+
   // Create title
   const title = document.createElement("span");
   title.className = "title";
@@ -73,7 +75,7 @@
   const subtitle = document.createElement("span");
   subtitle.className = "subtitle";
   subtitle.innerHTML = SUBTITLE;
-  
+
   const titleContainer = document.createElement("div");
   titleContainer.className = "title-container";
   titleContainer.appendChild(title);
@@ -83,7 +85,7 @@
   const inputTitle = document.createElement("span");
   inputTitle.className = "input-title";
   inputTitle.textContent = INPUT_PLACEHOLDER;
-  
+
   // Create input field
   const input = document.createElement("input");
   input.className = "input";
@@ -109,7 +111,7 @@
     input.style.borderColor = TITLE_COLOR;
     error.style.visibility = "hidden";
   });
-  
+
   // Create error message
   const error = document.createElement("span");
   error.className = "error";
@@ -121,13 +123,13 @@
   inputContainer.appendChild(inputTitle);
   inputContainer.appendChild(input);
   inputContainer.appendChild(error);
-  
+
   // Create note text
   const note = document.createElement("span");
   note.className = "note";
   note.innerHTML = NOTE_TEXT;
 
-  
+
   // Create button
   const button = document.createElement("button");
   button.className = "button";
@@ -138,11 +140,11 @@
     }
     send(input.value);
   });
-  
+
   // Create close button
   const closeButton = document.createElement("button");
   closeButton.className = "button";
-  
+
   // Create the popup window
   const popUpWindow = document.createElement("div");
   popUpWindow.id = "sellence-popup";
@@ -150,7 +152,7 @@
   popUpWindow.appendChild(inputContainer);
   popUpWindow.appendChild(note);
   popUpWindow.appendChild(button);
-  
+
   // Create the popup wrapper
   const popUpWrapper = document.createElement("div");
   popUpWrapper.id = "sellence-popup-wrapper";
