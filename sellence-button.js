@@ -1,5 +1,5 @@
 (function () {
-  // Google analytics
+  // Google Analytics
   const gaScript = document.createElement("script");
   gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
   gaScript.async = true;
