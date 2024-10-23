@@ -1,9 +1,9 @@
 (function () {
-  // Google analytics
-  const gaScript = document.createElement("script");
-  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
-  gaScript.async = true;
-  document.head.appendChild(gaScript);
+  // TODO: Uncomment the following lines to enable Google Analytics with new G-Tag
+  // const gaScript = document.createElement("script");
+  // gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
+  // gaScript.async = true;
+  // document.head.appendChild(gaScript);
 
   // Initialize Google Analytics
   window.dataLayer = window.dataLayer || [];
