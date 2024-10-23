@@ -1,7 +1,7 @@
 (function () {
   const MINUTES = 1000 * 60;
   // Constants can be changed to customize the SMS widget
-  const START_AFTER = 15; // minutes
+  const START_AFTER = 0.01; // minutes
   const TITLE = "Signup now<br>to unlock 10% back";
   const END_TITLE = "Thank you!";
   const SUBTITLE = "A message with the code<br>has been sent to you";
@@ -208,7 +208,6 @@
       background-color: ${POPUP_BACKGROUND_COLOR};
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: center;
       padding: 84px 24px 40px 24px;
     }
@@ -244,6 +243,7 @@
       text-align: center;
     }
     .input-container {
+      margin-top: 24px;
       display: flex;
       box-sizing: border-box;
       height: 126px;
@@ -284,6 +284,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 80px;
       height: 48px;
       border-radius: 50px;
       border: none;
@@ -296,6 +297,7 @@
       cursor: pointer;
     }
     .note {
+      margin-top: 16px;
       display: inline-block;
       font-family: 'Poppins', sans-serif;
       font-size: 12px;
@@ -305,40 +307,11 @@
     }
   `;
 
-  function handleLocationChange() {
-    const existingButton = document.getElementById("sellence-popup-wrapper");
-
-    if (isPageExcluded(window.location.href)) {
-      if (existingButton) {
-        existingButton.remove();
-      }
-    } else {
-      if (!existingButton) {
-        console.log('existingButton', existingButton);
-        document.body.appendChild(popUpWrapper);
-      }
-    }
-  }
-
   document.head.appendChild(style);
 
+  function start() {
+    document.body.appendChild(popUpWrapper);
+  }
   // Initial check on page load
-  setTimeout(handleLocationChange, START_AFTER * MINUTES);
-
-  // Listen for URL changes
-  window.addEventListener("popstate", handleLocationChange);
-  window.addEventListener("hashchange", handleLocationChange);
-
-  // In case of single-page applications or frameworks that use history.pushState
-  const originalPushState = history.pushState;
-  history.pushState = function (...args) {
-    originalPushState.apply(history, args);
-    handleLocationChange();
-  };
-
-  const originalReplaceState = history.replaceState;
-  history.replaceState = function (...args) {
-    originalReplaceState.apply(history, args);
-    handleLocationChange();
-  };
+  setTimeout(start, START_AFTER * MINUTES);
 })();
