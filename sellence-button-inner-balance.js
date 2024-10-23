@@ -10,11 +10,12 @@
   function gtag() {
     dataLayer.push(arguments);
   }
-  gtag("js", new Date());
-
-  gtag("config", "G-KRHR3HDKXQ", {
-    page_path: window.location.pathname,
-  });
+  // TODO: Uncomment the following lines to enable Google Analytics with new G-Tag
+  // gtag("js", new Date());
+  //
+  // gtag("config", "G-KRHR3HDKXQ", {
+  //   page_path: window.location.pathname,
+  // });
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
@@ -111,7 +112,8 @@
   anchor.href = "#";
   // anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
   anchor.addEventListener("click", function () {
-    sendGoogleAnalyticsEvent();
+    // TODO: Uncomment the following line to enable Google Analytics with new G-Tag
+    // sendGoogleAnalyticsEvent();
     if (!isMobile) {
       let qr = null;
       const buttonComponent = document.querySelector("#sellence-button");
