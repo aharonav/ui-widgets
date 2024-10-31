@@ -78,7 +78,7 @@
   qrCodeHeaderText.textContent = "Scan the QR code to text us";
   const qrCodeHeaderIcon = document.createElementNS(svgNS, "svg");
   qrCodeHeaderIcon.setAttribute("width", "17");
-  qrCodeHeaderContainer.setAttribute("height", "17");
+  qrCodeHeaderIcon.setAttribute("height", "17");
   qrCodeHeaderIcon.setAttribute("viewBox", "0 0 17 17");
   qrCodeHeaderIcon.setAttribute("fill", "none");
   const headerIconPath1 = document.createElementNS(svgNS, "path");
