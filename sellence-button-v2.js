@@ -69,6 +69,7 @@
 
     const input = document.createElement("input");
     input.className = "input";
+    input.id = title.toLowerCase();
     input.type = type;
     input.placeholder = title;
 
@@ -121,15 +122,33 @@
     return result;
   }
 
-  const handleSendButtonClick = function () {
-    // TODO: Call endpoint to send data
+  const handleSendButtonClick = async function () {
+    // Call endpoint to send data https://app.sellence.com:2083/pop-up/create (POST)
+    const customer_name = formContainer.querySelector('#name').value;
+    const phone_number = formContainer.querySelector('#phone').value;
+    const customer_message = formContainer.querySelector('#message').value;
+    const errorText = formContainer.querySelector('.error');
+    if (!customer_name || !phone_number || errorText.style.visibility === "visible") {
+      return;
+    }
+    await fetch('https://app.sellence.com:2083/pop-up/create ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customer_name,
+        phone_number,
+        customer_message,
+      }),
+    })
     formContainer.remove();
     agreement.remove();
     content.appendChild(messageSent);
     content.appendChild(weReceivedYourMessageContainer);
     sendButton.remove();
   }
-  
+
   const onOpenButtonClickListener = function () {
     if (isMobile) {
       header.appendChild(smallCloseIcon);
@@ -368,7 +387,7 @@
   anchor.addEventListener("click", onOpenButtonClickListener);
 
   anchor.appendChild(buttonWrapper);
-
+  
   // Styles
   const style = document.createElement("style");
   style.textContent = `
