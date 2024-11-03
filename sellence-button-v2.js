@@ -275,8 +275,8 @@
   const footerText = document.createElement("p");
   footerText.innerHTML = FOOTER_TEXT;
   const footerIcon = document.createElementNS(svgNS, "svg");
-  footerIcon.setAttribute("width", "71");
-  footerIcon.setAttribute("height", "21");
+  footerIcon.setAttribute("width", "48");
+  footerIcon.setAttribute("height", "14");
   footerIcon.setAttribute("viewBox", "0 0 192 28");
   footerIcon.setAttribute("fill", "none");
 
