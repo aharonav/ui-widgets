@@ -26,7 +26,7 @@
     "https://www.innerbalance.com/onboarding-questionnaire",
     "https://www.innerbalance.com/checkout",
   ];
-  const AGREEMENT_TEXT = `By submitting, you authorize Sellence to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
+  const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Enter your information, and our  team will text you shortly.";
   const FOOTER_TEXT = `<a href="${SELLENCE_URL}" target="_blank">Try Smarter SMS texting</a> powered by`;
 
