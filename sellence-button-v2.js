@@ -40,7 +40,7 @@
   const isMobile = detectDevice();
   // Load the Google Fonts asynchronously
   const fontLink = document.createElement("link");
-  fontLink.href = "https://fonts.googleapis.com/css?family=Poppins";
+  fontLink.href = "https://fonts.googleapis.com/css?family=Poppins:wght@400;500;700;900";
   fontLink.rel = "stylesheet";
   document.head.appendChild(fontLink);
 
@@ -66,7 +66,7 @@
 
     const input = document.createElement("input");
     input.className = "input";
-    input.id = title.toLowerCase();
+    input.id = title.replace(' ', '').toLowerCase();
     input.type = type;
     input.placeholder = title;
 
@@ -122,30 +122,30 @@
   const handleSendButtonClick = async function () {
     // Call endpoint to send data https://app.sellence.com:2083/pop-up/create (POST)
     const customer_name = formContainer.querySelector('#name').value;
-    const phone_number = formContainer.querySelector('#phone').value;
+    const phone_number = formContainer.querySelector('#mobilephone').value;
     const customer_message = formContainer.querySelector('#message').value;
     const errorText = formContainer.querySelector('.error');
     if (!customer_name || !phone_number || errorText.style.visibility === "visible") {
       return;
     }
-    // await fetch('https://app.sellence.com:2083/pop-up/create ', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     customer_name,
-    //     phone_number,
-    //     customer_message,
-    //   }),
-    // })
+    await fetch('https://app.sellence.com:2083/pop-up/create ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customer_name,
+        phone_number,
+        customer_message,
+      }),
+    })
     formContainer.remove();
     agreement.remove();
     avatarImageContainer2.remove();
     messageSent.textContent = customer_message;
     content.appendChild(messageSent);
     content.appendChild(avatarImageContainer2);
-    weReceivedYourMessageContainer.innerHTML = `Thank you, <span>${customer_name}</span>.<br> We Received your message. We’ll be reaching out via text to your number:<br> <span>${phone_number}</span>`;
+    weReceivedYourMessageContainer.innerHTML = `<span>Thank you, ${customer_name}</span>.<br> We Received your message. We’ll be reaching out via text to your number:<br> <span>${phone_number}</span>`;
     content.appendChild(weReceivedYourMessageContainer);
     sendButton.remove();
   }
@@ -280,6 +280,7 @@
   footerLink.target = "_blank";
   
   const footerIcon = document.createElementNS(svgNS, "svg");
+  footerIcon.id = "sellence-popup-footer-icon";
   footerIcon.setAttribute("width", "71");
   footerIcon.setAttribute("height", "21");
   footerIcon.setAttribute("viewBox", "0 0 192 28");
@@ -350,7 +351,7 @@
   content.appendChild(formTitle);
 
   const nameInput = createInputContainer("Name", "", "text");
-  const phoneInput = createInputContainer("Phone", "Invalid phone number", "tel", isValidPhoneNumber);
+  const phoneInput = createInputContainer("Mobile Phone", "Invalid phone number", "tel", isValidPhoneNumber);
   const messageInput = createInputContainer("Message", "", "text");
 
   formContainer.appendChild(nameInput);
@@ -432,14 +433,14 @@
     #sellence-popup-wrapper {
       position: fixed;
       right: 20px;
-      bottom: 100px;
+      bottom: 120px;
       width: 342px;
       height: 754px;
       background-color: #F1F1F5;
       border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.21);
       display: flex;
       flex-direction: column;
+      box-shadow: 0px 1px 8.3px 0px #00000036;
     }
         ` // Desktop styles
   }
@@ -472,6 +473,7 @@
       justify-content: center;
       align-items: center;
       align-self: flex-start;
+      box-shadow: 0px 1px 8.3px 0px #00000036;
     }
     #sellence-popup-content {
       display: flex;
@@ -492,7 +494,8 @@
       color: #434343;
     }
     .sellence-popup-content-form-title span {
-      font-weight: 700;
+      font-weight: bold;
+      color: #000000;
     }
     #sellence-popup-content-form-container {
       display: flex;
@@ -545,8 +548,8 @@
       text-align: justify;
     }
     #sellence-popup-content-agreement a {
-      text-decoration: underline;
-      color: #707070;
+      text-decoration: underline !important;
+      color: #707070 !important;
     }
     #sellence-popup-send-button {
       display: block;
@@ -583,6 +586,9 @@
       text-decoration: underline;
       color: #345CD1;
     }
+    #sellence-popup-footer-icon {
+      margin-top: 3px;
+    }
     #sellence-popup-message-sent {
       display: none;
       padding: 16px;
@@ -609,6 +615,7 @@
         justify-content: space-evenly;
         align-items: center;
         transition: 300ms;
+        box-shadow: 0px 1px 8.3px 0px #00000036;
     }
   `;
 
