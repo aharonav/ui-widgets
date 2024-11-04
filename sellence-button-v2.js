@@ -526,7 +526,7 @@
       outline: none;
       padding: 7px 0;
       font-family: 'Poppins', sans-serif;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 500;
       color: ${INPUT_TEXT_COLOR};
     }
