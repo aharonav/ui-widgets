@@ -240,8 +240,8 @@
   headerText.textContent = TITLE;
 
   const headerIcon = document.createElementNS(svgNS, "svg");
-  headerIcon.setAttribute("width", "24");
-  headerIcon.setAttribute("height", "24");
+  headerIcon.setAttribute("width", "41");
+  headerIcon.setAttribute("height", "41");
   headerIcon.setAttribute("viewBox", "0 0 24 24");
   headerIcon.setAttribute("fill", "none");
   const headerIconPath1 = document.createElementNS(svgNS, "path");
@@ -374,8 +374,8 @@
   weReceivedYourMessageContainer.className = "sellence-popup-content-form-title";
 
   const smallCloseIcon = document.createElementNS(svgNS, "svg");
-  smallCloseIcon.setAttribute("width", "17");
-  smallCloseIcon.setAttribute("height", "17");
+  smallCloseIcon.setAttribute("width", "32");
+  smallCloseIcon.setAttribute("height", "32");
   smallCloseIcon.setAttribute("viewBox", "0 0 17 17");
   smallCloseIcon.setAttribute("fill", "none");
   const smallCloseIconIconPath1 = document.createElementNS(svgNS, "path");
@@ -446,19 +446,22 @@
 
     #sellence-popup-header {
       height: 74px;
+      padding: 24px;
       background-color: ${BACKGROUND_COLOR};
       border-radius: ${isMobile ? `0` : `8px 8px 0 0`};
       display: flex;
       flex-direction: row;
-      justify-content: ${isMobile ? `space-evenly` : `center`};
+      justify-content: 'space-between';
       align-items: center;
-      gap: 28px;
     }
     #sellence-popup-header-text {
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
       font-weight: 500;
       color: ${TEXT_COLOR};
+      display: inline-block;
+      margin-left: 24px;
+      margin-right: 24px;
     }
     #sellence-popup-content-avatar {
       width: 36px;
