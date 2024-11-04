@@ -585,7 +585,6 @@
     }
     #sellence-popup-message-sent {
       display: none;
-      width: 153px;
       padding: 16px;
       background-color: #DED5CD;
       border-radius: 24px 24px 0 24px;
