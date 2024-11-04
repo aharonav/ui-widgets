@@ -451,7 +451,7 @@
       border-radius: ${isMobile ? `0` : `8px 8px 0 0`};
       display: flex;
       flex-direction: row;
-      justify-content: 'space-between';
+      justify-content: center;
       align-items: center;
     }
     #sellence-popup-header-text {
