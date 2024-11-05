@@ -24,12 +24,23 @@
     "https://www.innerbalance.com/onboarding-questionnaire",
     "https://www.innerbalance.com/checkout",
   ];
+  const INCLUDE_URLS = [
+    "https://www.innerbalance.com/learn",
+  ];
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Fill in your details, and our team will text you soon";
   const FOOTER_TEXT = 'Powered by';
 
   function isPageExcluded(url) {
     return EXCLUDED_URLS.some((excludedUrl) => {
+      const regex = new RegExp(
+        excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      ); // Escape special characters in URL
+      return regex.test(url);
+    });
+  }
+  function isPageIncluded(url) {
+    return INCLUDE_URLS.some((excludedUrl) => {
       const regex = new RegExp(
         excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
       ); // Escape special characters in URL
@@ -622,16 +633,26 @@
   function handleLocationChange() {
     const existingButton = document.getElementById("sellence-button");
 
-    if (isPageExcluded(window.location.href)) {
-      if (existingButton) {
-        existingButton.remove();
-      }
-    } else {
+    // if (isPageExcluded(window.location.href)) {
+    //   if (existingButton) {
+    //     existingButton.remove();
+    //   }
+    // } else {
+    //   if (!existingButton) {
+    //     document.body.appendChild(anchor);
+    //   }
+    // }
+    if (isPageIncluded(window.location.href)) {
       if (!existingButton) {
         document.body.appendChild(anchor);
       }
+    } else {
+      if (existingButton) {
+        existingButton.remove();
+      }
     }
   }
+
 
   document.head.appendChild(style);
 
