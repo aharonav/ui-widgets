@@ -22,10 +22,12 @@
   const EXCLUDED_URLS = [
     "https://www.innerbalance.com/pre-questionnaire",
     "https://www.innerbalance.com/onboarding-questionnaire",
-    "https://www.innerbalance.com/checkout",
   ];
   const INCLUDE_URLS = [
     "https://www.innerbalance.com/learn",
+  ];
+  const ON_TOP_URLS = [
+    "https://www.innerbalance.com/checkout",
   ];
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Fill in your details, and our team will text you soon";
@@ -48,6 +50,15 @@
     });
   }
 
+  function isPageOnTop(url) {
+    return ON_TOP_URLS.some((excludedUrl) => {
+      const regex = new RegExp(
+        excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      ); // Escape special characters in URL
+      return regex.test(url);
+    });
+  }
+  
   const isMobile = detectDevice();
   // Load the Google Fonts asynchronously
   const fontLink = document.createElement("link");
@@ -420,11 +431,11 @@
   const style = document.createElement("style");
   style.textContent = `
     #sellence-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        text-decoration: none;
-        z-index: 9999;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      text-decoration: none;
+      z-index: 9999;
     }
     ${
     isMobile
