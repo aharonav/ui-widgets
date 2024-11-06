@@ -25,6 +25,7 @@
   ];
   const INCLUDE_URLS = [
     "https://www.innerbalance.com/learn",
+    "localhost:8888"
   ];
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
@@ -41,6 +42,7 @@
       return regex.test(url);
     });
   }
+
   function isPageIncluded(url) {
     return INCLUDE_URLS.some((excludedUrl) => {
       const regex = new RegExp(
@@ -292,7 +294,7 @@
   const footerLink = document.createElement("a");
   footerLink.href = SELLENCE_URL;
   footerLink.target = "_blank";
-  
+
   const footerIcon = document.createElementNS(svgNS, "svg");
   footerIcon.id = "sellence-popup-footer-icon";
   footerIcon.setAttribute("width", "71");
@@ -304,18 +306,18 @@
   footerIconPath1.setAttribute("d", "M23.1039 18.3741C23.1039 23.8066 18.7726 27.3671 11.9086 27.3671C5.04459 27.3671 0.639883 23.7332 0.162707 17.8969H7.17353C7.24694 20.3929 8.89871 21.9713 11.7618 21.9713C14.1476 21.9713 15.726 21.0536 15.726 19.4019C15.726 18.264 14.5881 17.4198 13.0465 17.1261L8.238 16.2085C4.01682 15.4009 1.22718 12.9416 1.22718 8.68377C1.22718 3.76518 5.55847 0.314824 11.4681 0.314824C17.7448 0.314824 22.2596 3.912 22.6634 9.60141H15.6526C15.4691 7.21553 13.854 5.67388 11.5415 5.67388C9.486 5.67388 8.238 6.77506 8.238 8.20659C8.238 9.38118 9.41259 10.0786 10.8074 10.3355L15.9095 11.3266C20.6079 12.2442 23.1039 14.5567 23.1039 18.3741ZM45.3063 20.9802V27H26.6598V0.645177H45.0494V6.66494H33.5972V10.4456H43.9849V16.4654H33.5972V20.9802H45.3063ZM67.3009 27H49.2783V0.645177H56.2157V20.7233H67.3009V27ZM88.9875 27H70.9649V0.645177H77.9023V20.7233H88.9875V27ZM111.298 20.9802V27H92.6515V0.645177H111.041V6.66494H99.5889V10.4456H109.977V16.4654H99.5889V20.9802H111.298ZM132.118 27L121.62 10.5558V27H115.27V0.645177H122.721L132.448 15.8781V0.645177H138.799V27H132.118ZM155.803 27.5506C148.315 27.5506 142.405 21.5308 142.405 13.7859C142.405 6.07765 148.315 0.0945891 155.803 0.0945891C163.034 0.0945891 168.613 4.90306 169.457 11.8772H162.116C161.565 8.57365 159.106 6.29788 155.876 6.29788C151.985 6.29788 149.526 9.30777 149.526 13.7859C149.526 18.3007 151.985 21.3473 155.876 21.3473C159.069 21.3473 161.529 19.0715 162.116 15.7313H169.457C168.576 22.7788 163.034 27.5506 155.803 27.5506ZM191.7 20.9802V27H173.053V0.645177H191.443V6.66494H179.991V10.4456H190.378V16.4654H179.991V20.9802H191.7Z");
   footerIconPath1.setAttribute("fill", "black");
   footerIcon.appendChild(footerIconPath1);
-  
+
   footerLink.appendChild(footerIcon);
 
   footer.appendChild(footerText);
   footer.appendChild(footerLink);
-  
+
   const avatarImage = document.createElementNS(svgNS, "svg");
   avatarImage.setAttribute("width", "26");
   avatarImage.setAttribute("height", "16");
   avatarImage.setAttribute("viewBox", "0 0 26 16");
   avatarImage.setAttribute("fill", "none");
-  
+
   const avatarImagePath1 = document.createElementNS(svgNS, "path");
   avatarImagePath1.setAttribute("d", "M1.4043 15.2002V9.28682C1.4043 6.79631 3.42326 4.77734 5.91377 4.77734V4.77734C8.40428 4.77734 10.4232 6.7963 10.4232 9.28682V15.2002");
   avatarImagePath1.setAttribute("stroke", '#46503A');
@@ -328,15 +330,15 @@
   avatarImagePath3.setAttribute("d", "M0.76001 1.52002H25.24");
   avatarImagePath3.setAttribute("stroke", '#46503A');
   avatarImagePath3.setAttribute("stroke-width", "2");
-  
+
   avatarImage.appendChild(avatarImagePath1);
   avatarImage.appendChild(avatarImagePath2);
   avatarImage.appendChild(avatarImagePath3);
-  
+
   const avatarImageContainer = document.createElement("div");
   avatarImageContainer.id = "sellence-popup-content-avatar";
   avatarImageContainer.appendChild(avatarImage);
-  
+
   const avatarImageContainer2 = avatarImageContainer.cloneNode(true);
 
   const content = document.createElement("div");
@@ -410,7 +412,6 @@
   smallCloseIcon.addEventListener("click", onCloseButtonClickListener);
 
 
-
   // Create the anchor tag for the SMS widget
   const anchor = document.createElement("a");
   anchor.id = "sellence-button";
@@ -418,7 +419,7 @@
   anchor.addEventListener("click", onOpenButtonClickListener);
 
   anchor.appendChild(buttonWrapper);
-  
+
   // Styles
   const style = document.createElement("style");
   style.textContent = `
@@ -455,8 +456,22 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0px 1px 8.3px 0px #00000036;
+    } 
+    @media only screen and (max-width: 1280px) {
+      #sellence-popup-wrapper {
+        position: fixed;
+        right: 20px;
+        bottom: 100;
+        width: 342px;
+        height: 500px;
+        background-color: #F1F1F5;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0px 1px 8.3px 0px #00000036;
+      } 
     }
-        ` // Desktop styles
+    ` // Desktop styles
   }
 
     #sellence-popup-header {
@@ -468,6 +483,11 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
+    }
+    @media only screen and (max-width: 1280px) {
+      #sellence-popup-header {
+        height: 20px;
+      }
     }
     #sellence-popup-header-text {
       font-family: 'Poppins', sans-serif;
@@ -482,12 +502,17 @@
       width: 36px;
       height: 36px;
       background-color: ${TEXT_COLOR};
-      border-radius: 36px;
+      border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       align-self: flex-start;
       box-shadow: 0px 1px 8.3px 0px #00000036;
+    }    
+    @media only screen and (max-width: 1280px) {
+      #sellence-popup-content-avatar {
+        display: none;
+      }
     }
     #sellence-popup-content {
       display: flex;
@@ -496,6 +521,11 @@
       justify-content: flex-start;
       padding: 16px;
       gap: 16px;
+    }
+    @media only screen and (max-width: 1280px) {
+      #sellence-popup-content {
+        overflow-y: auto;
+      }
     }
     .sellence-popup-content-form-title {
       width: 193px;
