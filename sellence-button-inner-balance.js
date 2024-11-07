@@ -81,11 +81,15 @@
     inputTitle.className = "input-title";
     inputTitle.textContent = title;
 
-    const input = document.createElement("input");
+    const input = document.createElement(title === "Message" ? "textarea" : "input");
     input.className = "input";
     input.id = title.replace(' ', '').toLowerCase();
     input.type = type;
     input.placeholder = title;
+    if (title === "Message") {
+      input.setAttribute("rows", "4");
+      input.setAttribute("onInput", "this.style.height = '';this.style.height = this.scrollHeight + 'px'");
+    }
 
     const errorText = document.createElement("span");
     errorText.className = "error";
@@ -94,6 +98,11 @@
     input.addEventListener("input", () => {
       input.style.borderColor = INPUT_TEXT_COLOR;
       errorText.style.visibility = "hidden";
+      const inputHeight = parseInt(input.style.height);
+      if (inputHeight > 38) {
+        const fc = document.getElementById("sellence-popup-content-form-container");
+        fc.style.height = "auto";
+      }
       if (input.value) {
         inputTitle.style.visibility = "visible";
         if (validationFunction && !validationFunction(input.value)) {
