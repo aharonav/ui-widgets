@@ -30,6 +30,10 @@
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
   ];
+  let windowHeight = window.innerHeight;
+  window.addEventListener("resize", function () {
+    windowHeight = window.innerHeight;
+  });
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Fill in your details, and our team will text you soon";
   const FOOTER_TEXT = 'Powered by';
@@ -450,27 +454,14 @@
       right: 20px;
       bottom: 120px;
       width: 342px;
-      height: 754px;
+      height: ${windowHeight - 120 - 100}px;
+      max-height: 754px;
       background-color: #F1F1F5;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
       box-shadow: 0px 1px 8.3px 0px #00000036;
     } 
-    @media only screen and (max-width: 1440px) {
-      #sellence-popup-wrapper {
-        position: fixed;
-        right: 20px;
-        bottom: 100;
-        width: 342px;
-        height: 500px;
-        background-color: #F1F1F5;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0px 1px 8.3px 0px #00000036;
-      } 
-    }
     ` // Desktop styles
   }
 
@@ -484,11 +475,7 @@
       justify-content: center;
       align-items: center;
     }
-    @media only screen and (max-width: 1440px) {
-      #sellence-popup-header {
-        height: 20px;
-      }
-    }
+
     #sellence-popup-header-text {
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
@@ -509,11 +496,6 @@
       align-self: flex-start;
       box-shadow: 0px 1px 8.3px 0px #00000036;
     }    
-    @media only screen and (max-width: 1440px) {
-      #sellence-popup-content-avatar {
-        display: none;
-      }
-    }
     #sellence-popup-content {
       display: flex;
       flex: 1;
@@ -521,11 +503,7 @@
       justify-content: flex-start;
       padding: 16px;
       gap: 16px;
-    }
-    @media only screen and (max-width: 1440px) {
-      #sellence-popup-content {
-        overflow-y: auto;
-      }
+      overflow-y: auto;
     }
     .sellence-popup-content-form-title {
       width: 193px;
