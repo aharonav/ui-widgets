@@ -494,7 +494,6 @@
     #sellence-popup-content-avatar {
       min-width: 36px;
       min-height: 36px;
-      padding: 10px;
       background-color: ${TEXT_COLOR};
       border-radius: 50%;
       display: flex;
