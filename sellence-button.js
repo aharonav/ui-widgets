@@ -1,20 +1,21 @@
 (function () {
-  // Google Analytics
-  const gaScript = document.createElement("script");
-  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
-  gaScript.async = true;
-  document.head.appendChild(gaScript);
+  // TODO: Uncomment the following lines to enable Google Analytics with new G-Tag
+  // const gaScript = document.createElement("script");
+  // gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-KRHR3HDKXQ";
+  // gaScript.async = true;
+  // document.head.appendChild(gaScript);
 
   // Initialize Google Analytics
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);
   }
-  gtag("js", new Date());
-
-  gtag("config", "G-KRHR3HDKXQ", {
-    page_path: window.location.pathname,
-  });
+  // TODO: Uncomment the following lines to enable Google Analytics with new G-Tag
+  // gtag("js", new Date());
+  //
+  // gtag("config", "G-KRHR3HDKXQ", {
+  //   page_path: window.location.pathname,
+  // });
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
@@ -24,13 +25,17 @@
   }
 
   // Constants can be changed to customize the SMS widget
-  const PHONE_NUMBER = "+972545832828";
+  const PHONE_NUMBER = "+12137996421";
   const MESSAGE_BODY = "";
   const BUTTON_TEXT = "Text us";
   const TEXT_COLOR = "#FAFAFA";
   const BACKGROUND_COLOR = "#98622B";
   const QR_CODE_COLOR = "#000000";
-  const EXCLUDED_URLS = [];
+  const EXCLUDED_URLS = [
+    "https://www.innerbalance.com/pre-questionnaire",
+    "https://www.innerbalance.com/onboarding-questionnaire",
+    "https://www.innerbalance.com/checkout",
+  ];
 
   function isPageExcluded(url) {
     return EXCLUDED_URLS.some((excludedUrl) => {
@@ -73,7 +78,7 @@
   qrCodeHeaderText.textContent = "Scan the QR code to text us";
   const qrCodeHeaderIcon = document.createElementNS(svgNS, "svg");
   qrCodeHeaderIcon.setAttribute("width", "17");
-  qrCodeHeaderContainer.setAttribute("height", "17");
+  qrCodeHeaderIcon.setAttribute("height", "17");
   qrCodeHeaderIcon.setAttribute("viewBox", "0 0 17 17");
   qrCodeHeaderIcon.setAttribute("fill", "none");
   const headerIconPath1 = document.createElementNS(svgNS, "path");
@@ -107,7 +112,8 @@
   anchor.href = "#";
   // anchor.href = isMobile ? `sms:${PHONE_NUMBER}` : "#";
   anchor.addEventListener("click", function () {
-    sendGoogleAnalyticsEvent();
+    // TODO: Uncomment the following line to enable Google Analytics with new G-Tag
+    // sendGoogleAnalyticsEvent();
     if (!isMobile) {
       let qr = null;
       const buttonComponent = document.querySelector("#sellence-button");
@@ -191,8 +197,8 @@
         z-index: 9999;
     }
     ${
-      !isMobile
-        ? `
+    !isMobile
+      ? `
     #wrap {
         width: 62px;
         height: 62px;
@@ -206,7 +212,7 @@
         transition: 300ms;
     }
     `
-        : `
+      : `
     #wrap {
       width: auto;
       padding: 0 20px;
@@ -221,7 +227,7 @@
       align-items: center;
     }
     `
-    }
+  }
     #wrap .text {
       color: ${TEXT_COLOR};
       font-size: 19px;
@@ -229,8 +235,8 @@
       font-family: 'Manrope', sans-serif;
     }
     ${
-      !isMobile
-        ? `
+    !isMobile
+      ? `
     #wrap:hover {
       width: auto;
       padding: 0 21px;
@@ -240,8 +246,8 @@
       display: inline;
     }
     `
-        : ""
-    }
+      : ""
+  }
     .qr-code-wrapper {
       height: 311px;
       width: 329px;
