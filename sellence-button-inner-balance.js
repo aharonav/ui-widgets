@@ -30,10 +30,7 @@
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
   ];
-  let windowHeight = window.innerHeight;
-  window.addEventListener("resize", function () {
-    windowHeight = window.innerHeight;
-  });
+  let usefulWindowHeight = window.innerHeight - 220;
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Fill in your details, and our team will text you soon";
   const FOOTER_TEXT = 'Powered by';
@@ -452,9 +449,9 @@
     #sellence-popup-wrapper {
       position: fixed;
       right: 20px;
-      bottom: 120px;
+      bottom: 92px;
       width: 342px;
-      height: ${windowHeight - 120 - 100}px;
+      height: ${usefulWindowHeight}px;
       max-height: 754px;
       background-color: #F1F1F5;
       border-radius: 8px;
@@ -466,7 +463,7 @@
   }
 
     #sellence-popup-header {
-      height: 74px;
+      height: 30px;
       padding: 24px;
       background-color: ${BACKGROUND_COLOR};
       border-radius: ${isMobile ? `0` : `8px 8px 0 0`};
@@ -486,8 +483,9 @@
       margin-right: 24px;
     }
     #sellence-popup-content-avatar {
-      width: 36px;
-      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      padding: 10px;
       background-color: ${TEXT_COLOR};
       border-radius: 50%;
       display: flex;
