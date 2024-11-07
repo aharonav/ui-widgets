@@ -457,7 +457,7 @@
       flex-direction: column;
       box-shadow: 0px 1px 8.3px 0px #00000036;
     } 
-    @media only screen and (max-width: 1280px) {
+    @media only screen and (max-width: 1440px) {
       #sellence-popup-wrapper {
         position: fixed;
         right: 20px;
@@ -484,7 +484,7 @@
       justify-content: center;
       align-items: center;
     }
-    @media only screen and (max-width: 1280px) {
+    @media only screen and (max-width: 1440px) {
       #sellence-popup-header {
         height: 20px;
       }
@@ -509,7 +509,7 @@
       align-self: flex-start;
       box-shadow: 0px 1px 8.3px 0px #00000036;
     }    
-    @media only screen and (max-width: 1280px) {
+    @media only screen and (max-width: 1440px) {
       #sellence-popup-content-avatar {
         display: none;
       }
@@ -522,7 +522,7 @@
       padding: 16px;
       gap: 16px;
     }
-    @media only screen and (max-width: 1280px) {
+    @media only screen and (max-width: 1440px) {
       #sellence-popup-content {
         overflow-y: auto;
       }
