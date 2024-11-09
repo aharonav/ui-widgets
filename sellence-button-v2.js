@@ -30,7 +30,7 @@
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
   ];
-  let usefulWindowHeight = window.innerHeight - 220;
+  let usefulWindowHeight = window.innerHeight - 120;
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Fill in your details, and our team will text you soon";
   const FOOTER_TEXT = 'Powered by';
@@ -48,6 +48,15 @@
     return INCLUDE_URLS.some((excludedUrl) => {
       const regex = new RegExp(
         excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      ); // Escape special characters in URL
+      return regex.test(url);
+    });
+  }
+  
+  function isOnTopPage(url) {
+    return ON_TOP_URLS.some((url) => {
+      const regex = new RegExp(
+        url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
       ); // Escape special characters in URL
       return regex.test(url);
     });
@@ -433,13 +442,22 @@
   // Styles
   const style = document.createElement("style");
   style.textContent = `
+  ${isMobile && isOnTop ? `
+    #sellence-button {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        text-decoration: none;
+        z-index: 999999;
+    }` : `
     #sellence-button {
         position: fixed;
         bottom: 20px;
         right: 20px;
         text-decoration: none;
         z-index: 999999;
-    }
+    }`
+  } 
     ${
     isMobile
       ? `
@@ -474,7 +492,7 @@
   }
 
     #sellence-popup-header {
-      height: 30px;
+      min-height: 70px;
       padding: 24px;
       background-color: ${BACKGROUND_COLOR};
       border-radius: ${isMobile ? `0` : `8px 8px 0 0`};
@@ -633,12 +651,13 @@
       font-size: 12px;
       font-weight: 400;
     }
-    
     #wrap {
-        width: 62px;
-        height: 62px;
+        min-width: 62px;
+        max-width: 62px;
+        min-height: 62px;
+        max-height: 62px;
         background-color: ${BACKGROUND_COLOR};
-        border-radius: 62px;
+        border-radius: 50%;
         position: relative;
         cursor: pointer;
         display: flex;
@@ -663,6 +682,9 @@
     // }
     if (isPageIncluded(window.location.href)) {
       if (!existingButton) {
+        if(isOnTopPage(window.location.href)) {
+          isOnTop = true;
+        }
         document.body.appendChild(anchor);
       }
     } else {
