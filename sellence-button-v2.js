@@ -438,7 +438,7 @@
         bottom: 20px;
         right: 20px;
         text-decoration: none;
-        z-index: 9999;
+        z-index: 999999;
     }
     ${
     isMobile
@@ -452,6 +452,7 @@
       background-color: #F1F1F5;
       display: flex;
       flex-direction: column;
+      z-index: 999999;
     } 
         ` // Mobile styles
       : `
@@ -467,6 +468,7 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0px 1px 8.3px 0px #00000036;
+      z-index: 999999;
     } 
     ` // Desktop styles
   }
