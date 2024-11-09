@@ -110,6 +110,8 @@
       const inputHeight = parseInt(input.style.height);
       if (inputHeight > 38) {
         const fc = document.getElementById("sellence-popup-content-form-container");
+        const cc = document.getElementById("sellence-popup-content");
+        cc.scrollTop = fc.scrollHeight;
         fc.style.height = "auto";
       }
       if (input.value) {
@@ -163,17 +165,17 @@
     if (!customer_name || !phone_number || errorText.style.visibility === "visible") {
       return;
     }
-    await fetch('https://app.sellence.com:2083/pop-up/create ', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        customer_name,
-        phone_number,
-        customer_message,
-      }),
-    })
+    // await fetch('https://app.sellence.com:2083/pop-up/create ', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     customer_name,
+    //     phone_number,
+    //     customer_message,
+    //   }),
+    // })
     formContainer.remove();
     agreement.remove();
     avatarImageContainer2.remove();
@@ -634,11 +636,9 @@
       text-decoration: underline;
       color: #345CD1;
     }
-    #sellence-popup-footer-icon {
-      margin-top: 3px;
-    }
     #sellence-popup-message-sent {
       display: none;
+      max-width: 200px;
       padding: 16px;
       background-color: #DED5CD;
       border-radius: 24px 24px 0 24px;
