@@ -98,6 +98,8 @@
     if (title === "Message") {
       input.setAttribute("rows", "4");
       input.setAttribute("onInput", "this.style.height = '';this.style.height = this.scrollHeight + 'px'");
+      input.style.resize = "none";
+      input.style.overflow = "hidden";
     }
 
     const errorText = document.createElement("span");
@@ -652,6 +654,7 @@
       font-family: 'Poppins', sans-serif;
       font-size: 12px;
       font-weight: 400;
+      word-break:break-all;
     }
     #wrap {
         min-width: 62px;
