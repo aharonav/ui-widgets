@@ -699,18 +699,18 @@
     // }
     if (isPageIncluded(window.location.href)) {
       if (!existingButton) {
-        document.body.appendChild(anchor);
-      }
-    } else {
-      if (existingButton) {
-        existingButton.remove();
-        existingPopUp.remove();
         anchor.addEventListener("click", onOpenButtonClickListener);
         anchor.removeEventListener("click", onCloseButtonClickListener);
         if (isMobile) {
           smallCloseIcon.remove();
           anchor.style.visibility = "visible";
         }
+        document.body.appendChild(anchor);
+      }
+    } else {
+      if (existingButton) {
+        existingButton.remove();
+        existingPopUp.remove();
       }
     }
   }
