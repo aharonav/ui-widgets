@@ -29,6 +29,7 @@
   ];
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
+    "localhost:8888",
   ];
   let usefulWindowHeight = window.innerHeight - 120;
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
@@ -682,7 +683,7 @@
       }
     } else {
       if (!existingButton) {
-        if(isOnTopPage(window.location.href)) {
+        if(isOnTopPage(window.location.href) && isMobile) {
           anchor.style.top = "70px";
           anchor.style.bottom = "auto";
         } else {
