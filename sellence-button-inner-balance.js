@@ -678,34 +678,35 @@
     const existingButton = document.getElementById("sellence-button");
     const existingPopUp = document.getElementById("sellence-popup-wrapper");
 
-    if (isPageExcluded(window.location.href)) {
-      if (existingButton) {
-        existingButton.remove();
-      }
-      if (existingPopUp) {
-        existingPopUp.remove();
-      }
-    } else {
-      if (!existingButton) {
-        if(isOnTopPage(window.location.href) && isMobile) {
-          anchor.style.top = "70px";
-          anchor.style.bottom = "auto";
-        } else {
-          anchor.style.bottom = "20px";
-          anchor.style.top = "auto";
-        }
-        document.body.appendChild(anchor);
-      }
-    }
-    // if (isPageIncluded(window.location.href)) {
-    //   if (!existingButton) {
-    //     document.body.appendChild(anchor);
-    //   }
-    // } else {
+    // if (isPageExcluded(window.location.href)) {
     //   if (existingButton) {
     //     existingButton.remove();
     //   }
+    //   if (existingPopUp) {
+    //     existingPopUp.remove();
+    //   }
+    // } else {
+    //   if (!existingButton) {
+    //     if(isOnTopPage(window.location.href) && isMobile) {
+    //       anchor.style.top = "70px";
+    //       anchor.style.bottom = "auto";
+    //     } else {
+    //       anchor.style.bottom = "20px";
+    //       anchor.style.top = "auto";
+    //     }
+    //     document.body.appendChild(anchor);
+    //   }
     // }
+    if (isPageIncluded(window.location.href)) {
+      if (!existingButton) {
+        document.body.appendChild(anchor);
+      }
+    } else {
+      if (existingButton) {
+        existingButton.remove();
+        existingPopUp.remove();
+      }
+    }
   }
 
 
