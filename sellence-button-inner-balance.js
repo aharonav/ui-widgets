@@ -699,8 +699,6 @@
     // }
     if (isPageIncluded(window.location.href)) {
       if (!existingButton) {
-        buttonIconClose.remove();
-        buttonWrapper.appendChild(buttonIconOpen);
         document.body.appendChild(anchor);
       }
     } else {
