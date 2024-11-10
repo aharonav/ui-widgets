@@ -52,11 +52,11 @@
       return regex.test(url);
     });
   }
-  
+
   function isOnTopPage(url) {
-    return ON_TOP_URLS.some((url) => {
+    return ON_TOP_URLS.some((onTopUrl) => {
       const regex = new RegExp(
-        url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+        onTopUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
       ); // Escape special characters in URL
       return regex.test(url);
     });
@@ -167,17 +167,17 @@
     if (!customer_name || !phone_number || errorText.style.visibility === "visible") {
       return;
     }
-    // await fetch('https://app.sellence.com:2083/pop-up/create ', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     customer_name,
-    //     phone_number,
-    //     customer_message,
-    //   }),
-    // })
+    await fetch('https://app.sellence.com:2083/pop-up/create ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customer_name,
+        phone_number,
+        customer_message,
+      }),
+    })
     formContainer.remove();
     agreement.remove();
     avatarImageContainer2.remove();
@@ -676,27 +676,31 @@
   function handleLocationChange() {
     const existingButton = document.getElementById("sellence-button");
 
-    // if (isPageExcluded(window.location.href)) {
-    //   if (existingButton) {
-    //     existingButton.remove();
-    //   }
-    // } else {
-    //   if (!existingButton) {
-    //     document.body.appendChild(anchor);
-    //   }
-    // }
-    if (isPageIncluded(window.location.href)) {
-      if (!existingButton) {
-        if(isOnTopPage(window.location.href)) {
-          isOnTop = true;
-        }
-        document.body.appendChild(anchor);
-      }
-    } else {
+    if (isPageExcluded(window.location.href)) {
       if (existingButton) {
         existingButton.remove();
       }
+    } else {
+      if (!existingButton) {
+        if(isOnTopPage(window.location.href)) {
+          anchor.style.top = "70px";
+          anchor.style.bottom = "auto";
+        } else {
+          anchor.style.bottom = "20px";
+          anchor.style.top = "auto";
+        }
+        document.body.appendChild(anchor);
+      }
     }
+    // if (isPageIncluded(window.location.href)) {
+    //   if (!existingButton) {
+    //     document.body.appendChild(anchor);
+    //   }
+    // } else {
+    //   if (existingButton) {
+    //     existingButton.remove();
+    //   }
+    // }
   }
 
 
