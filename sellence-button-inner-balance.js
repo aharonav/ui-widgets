@@ -222,6 +222,7 @@
 
   // Create the button icon
   const buttonIconOpen = document.createElementNS(svgNS, "svg");
+  buttonIconOpen.id = "sellence-popup-open-button";
   buttonIconOpen.setAttribute("width", "44");
   buttonIconOpen.setAttribute("height", "46");
   buttonIconOpen.setAttribute("viewBox", "0 0 44 46");
@@ -248,6 +249,7 @@
   buttonIconOpen.appendChild(buttonIconOpenPath3);
 
   const buttonIconClose = document.createElementNS(svgNS, "svg");
+  buttonIconClose.id = "sellence-popup-close-button";
   buttonIconClose.setAttribute("width", "30");
   buttonIconClose.setAttribute("height", "30");
   buttonIconClose.setAttribute("viewBox", "0 0 30 30");
@@ -699,7 +701,14 @@
     // }
     if (isPageIncluded(window.location.href)) {
       if (!existingButton) {
-
+        const closeButton = document.getElementById("sellence-popup-close-button");
+        const openButton = document.getElementById("sellence-popup-open-button");
+        if (closeButton) {
+          closeButton.remove();
+        }
+        if (!openButton) {
+          anchor.appendChild(buttonIconOpen)
+        }
         document.body.appendChild(anchor);
       }
     } else {
