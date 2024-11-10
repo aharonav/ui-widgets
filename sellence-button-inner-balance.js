@@ -29,6 +29,7 @@
   ];
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
+    "localhost:8888",
   ];
   let usefulWindowHeight = window.innerHeight - 120;
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
@@ -167,17 +168,17 @@
     if (!customer_name || !phone_number || errorText.style.visibility === "visible") {
       return;
     }
-    // await fetch('https://app.sellence.com:2083/pop-up/create ', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     customer_name,
-    //     phone_number,
-    //     customer_message,
-    //   }),
-    // })
+    await fetch('https://app.sellence.com:2083/pop-up/create ', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customer_name,
+        phone_number,
+        customer_message,
+      }),
+    })
     formContainer.remove();
     agreement.remove();
     avatarImageContainer2.remove();
@@ -676,13 +677,13 @@
   function handleLocationChange() {
     const existingButton = document.getElementById("sellence-button");
     const existingPopUp = document.getElementById("sellence-popup-wrapper");
-    if (existingPopUp) {
-      existingPopUp.remove();
-    }
 
     if (isPageExcluded(window.location.href)) {
       if (existingButton) {
         existingButton.remove();
+      }
+      if (existingPopUp) {
+        existingPopUp.remove();
       }
     } else {
       if (!existingButton) {
