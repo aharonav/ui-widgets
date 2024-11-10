@@ -54,9 +54,9 @@
   }
 
   function isOnTopPage(url) {
-    return ON_TOP_URLS.some((url) => {
+    return ON_TOP_URLS.some((onTopUrl) => {
       const regex = new RegExp(
-        url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+        onTopUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
       ); // Escape special characters in URL
       return regex.test(url);
     });
@@ -675,28 +675,36 @@
 
   function handleLocationChange() {
     const existingButton = document.getElementById("sellence-button");
+    const existingPopUp = document.getElementById("sellence-popup-wrapper");
+    if (existingPopUp) {
+      existingPopUp.remove();
+    }
 
-    // if (isPageExcluded(window.location.href)) {
-    //   if (existingButton) {
-    //     existingButton.remove();
-    //   }
-    // } else {
-    //   if (!existingButton) {
-    //     document.body.appendChild(anchor);
-    //   }
-    // }
-    if (isPageIncluded(window.location.href)) {
-      if (!existingButton) {
-        if(isOnTopPage(window.location.href)) {
-          isOnTop = true;
-        }
-        document.body.appendChild(anchor);
-      }
-    } else {
+    if (isPageExcluded(window.location.href)) {
       if (existingButton) {
         existingButton.remove();
       }
+    } else {
+      if (!existingButton) {
+        if(isOnTopPage(window.location.href) && isMobile) {
+          anchor.style.top = "70px";
+          anchor.style.bottom = "auto";
+        } else {
+          anchor.style.bottom = "20px";
+          anchor.style.top = "auto";
+        }
+        document.body.appendChild(anchor);
+      }
     }
+    // if (isPageIncluded(window.location.href)) {
+    //   if (!existingButton) {
+    //     document.body.appendChild(anchor);
+    //   }
+    // } else {
+    //   if (existingButton) {
+    //     existingButton.remove();
+    //   }
+    // }
   }
 
 
