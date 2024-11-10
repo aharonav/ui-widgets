@@ -699,7 +699,7 @@
     // }
     if (isPageIncluded(window.location.href)) {
       if (!existingButton) {
-        
+
         document.body.appendChild(anchor);
       }
     } else {
