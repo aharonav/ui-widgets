@@ -654,7 +654,7 @@
       font-family: 'Poppins', sans-serif;
       font-size: 12px;
       font-weight: 400;
-      word-break:break-all;
+      word-break:break-word;
     }
     #wrap {
         min-width: 62px;
