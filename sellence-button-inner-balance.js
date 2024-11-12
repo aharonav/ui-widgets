@@ -60,7 +60,7 @@
   }
 
   const isMobile = detectDevice();
-  // let isOnTop = false;
+  let isOnTop = isOnTopPage(window.location.href);
   // Load the Google Fonts asynchronously
   const fontLink = document.createElement("link");
   fontLink.href =
@@ -486,13 +486,25 @@
   // Styles
   const style = document.createElement("style");
   style.textContent = `
+${
+  isMobile && isOnTop
+    ? `
     #sellence-button {
         position: fixed;
         bottom: 20px;
         right: 20px;
         text-decoration: none;
         z-index: 999999;
-    }
+    }`
+    : `
+    #sellence-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      text-decoration: none;
+      z-index: 999999;
+    }`
+}
     ${
       isMobile
         ? `
