@@ -716,6 +716,7 @@ ${
   `;
 
   function handleLocationChange() {
+    console.log("Location changed", window.location.href);
     const existingButton = document.getElementById("sellence-button");
     const existingPopUp = document.getElementById("sellence-popup-wrapper");
 
@@ -727,16 +728,20 @@ ${
         existingPopUp.remove();
       }
     } else {
-      if (!existingButton) {
-        if (isOnTopPage(window.location.href) && isMobile) {
-          anchor.style.top = "70px";
-          anchor.style.bottom = "auto";
-        } else {
-          anchor.style.bottom = "20px";
-          anchor.style.top = "auto";
-        }
-        document.body.appendChild(anchor);
+      if (existingButton) {
+        existingButton.remove();
       }
+      if (existingPopUp) {
+        existingPopUp.remove();
+      }
+      if (isOnTopPage(window.location.href) && isMobile) {
+        anchor.style.top = "70px";
+        anchor.style.bottom = "auto";
+      } else {
+        anchor.style.bottom = "20px";
+        anchor.style.top = "auto";
+      }
+      document.body.appendChild(anchor);
     }
     //   if (isPageIncluded(window.location.href)) {
     //     if (!existingButton) {
