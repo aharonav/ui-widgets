@@ -720,13 +720,17 @@ ${
     const existingButton = document.getElementById("sellence-button");
     const existingPopUp = document.getElementById("sellence-popup-wrapper");
 
-    if (existingButton) {
-      existingButton.remove();
-    }
-    if (existingPopUp) {
-      existingPopUp.remove();
-    }
-    if (!isPageExcluded(window.location.href)) {
+    if (isPageExcluded(window.location.href)) {
+      if (existingButton) {
+        existingButton.remove();
+      }
+      if (existingPopUp) {
+        existingPopUp.remove();
+      }
+    } else {
+      if (existingButton) {
+        existingButton.remove();
+      }
       if (isOnTopPage(window.location.href) && isMobile) {
         anchor.style.top = "70px";
         anchor.style.bottom = "auto";
