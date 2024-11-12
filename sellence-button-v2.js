@@ -10,7 +10,8 @@
   // Constants can be changed to customize the SMS widget
   const TITLE = "Quick answer via text";
   const PHONE_NUMBER = "+12137996421";
-  const SELLENCE_URL = "https://sellence.com/?utm_source=innerbalance&utm_medium=widget&utm_campaign=1";
+  const SELLENCE_URL =
+    "https://sellence.com/?utm_source=innerbalance&utm_medium=widget&utm_campaign=1";
   const TERMS_URL = "https://www.innerbalance.com/terms-of-use";
   const BUTTON_TEXT = "Send";
   const TEXT_COLOR = "#FFFFFF";
@@ -23,10 +24,7 @@
     "https://www.innerbalance.com/pre-questionnaire",
     "https://www.innerbalance.com/onboarding-questionnaire",
   ];
-  const INCLUDE_URLS = [
-    "https://www.innerbalance.com/learn",
-    "localhost:8888"
-  ];
+  // const INCLUDE_URLS = ["https://www.innerbalance.com/learn", "localhost:8888"];
   const ON_TOP_URLS = [
     "https://www.innerbalance.com/checkout",
     "localhost:8888",
@@ -34,7 +32,7 @@
   let usefulWindowHeight = window.innerHeight - 120;
   const AGREEMENT_TEXT = `By submitting, you authorize Inner Balance to text and call the number you provided with offers & other information, possibly using automated means. Message/data rates apply. Consent is not a condition of purchase. <a href="${TERMS_URL}" target="_blank">Use is subject to terms.</a>`;
   const FORM_TITLE = "Fill in your details, and our team will text you soon";
-  const FOOTER_TEXT = 'Powered by';
+  const FOOTER_TEXT = "Powered by";
 
   function isPageExcluded(url) {
     return EXCLUDED_URLS.some((excludedUrl) => {
@@ -45,29 +43,28 @@
     });
   }
 
-  function isPageIncluded(url) {
-    return INCLUDE_URLS.some((excludedUrl) => {
-      const regex = new RegExp(
-        excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-      ); // Escape special characters in URL
-      return regex.test(url);
-    });
-  }
+  // function isPageIncluded(url) {
+  //   return INCLUDE_URLS.some((excludedUrl) => {
+  //     const regex = new RegExp(
+  //       excludedUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+  //     ); // Escape special characters in URL
+  //     return regex.test(url);
+  //   });
+  // }
 
   function isOnTopPage(url) {
     return ON_TOP_URLS.some((onTopUrl) => {
-      const regex = new RegExp(
-        onTopUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-      ); // Escape special characters in URL
+      const regex = new RegExp(onTopUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")); // Escape special characters in URL
       return regex.test(url);
     });
   }
 
   const isMobile = detectDevice();
-  let isOnTop = false;
+  let isOnTop = isOnTopPage(window.location.href);
   // Load the Google Fonts asynchronously
   const fontLink = document.createElement("link");
-  fontLink.href = "https://fonts.googleapis.com/css?family=Poppins:wght@400;500;700;900";
+  fontLink.href =
+    "https://fonts.googleapis.com/css?family=Poppins:wght@400;500;700;900";
   fontLink.rel = "stylesheet";
   document.head.appendChild(fontLink);
 
@@ -80,10 +77,24 @@
     const pattern6 = new RegExp(/^\+1 \d{3} \d{3} \d{4}$/);
     const pattern7 = new RegExp(/^\+1 \d{10}$/);
     const pattern8 = new RegExp(/^\+1\d{10}$/);
-    return pattern1.test(phoneNumber) || pattern2.test(phoneNumber) || pattern3.test(phoneNumber) || pattern4.test(phoneNumber) || pattern5.test(phoneNumber) || pattern6.test(phoneNumber) || pattern7.test(phoneNumber) || pattern8.test(phoneNumber);
+    return (
+      pattern1.test(phoneNumber) ||
+      pattern2.test(phoneNumber) ||
+      pattern3.test(phoneNumber) ||
+      pattern4.test(phoneNumber) ||
+      pattern5.test(phoneNumber) ||
+      pattern6.test(phoneNumber) ||
+      pattern7.test(phoneNumber) ||
+      pattern8.test(phoneNumber)
+    );
   }
 
-  const createInputContainer = function (title, error, type, validationFunction) {
+  const createInputContainer = function (
+    title,
+    error,
+    type,
+    validationFunction,
+  ) {
     const result = document.createElement("div");
     result.className = "input-container";
 
@@ -91,14 +102,19 @@
     inputTitle.className = "input-title";
     inputTitle.textContent = title;
 
-    const input = document.createElement(title === "Message" ? "textarea" : "input");
+    const input = document.createElement(
+      title === "Message" ? "textarea" : "input",
+    );
     input.className = "input";
-    input.id = title.replace(' ', '').toLowerCase();
+    input.id = title.replace(" ", "").toLowerCase();
     input.type = type;
     input.placeholder = title;
     if (title === "Message") {
       input.setAttribute("rows", "4");
-      input.setAttribute("onInput", "this.style.height = '';this.style.height = this.scrollHeight + 'px'");
+      input.setAttribute(
+        "onInput",
+        "this.style.height = '';this.style.height = this.scrollHeight + 'px'",
+      );
       input.style.resize = "none";
       input.style.overflow = "hidden";
     }
@@ -109,10 +125,12 @@
 
     input.addEventListener("input", () => {
       input.style.borderColor = INPUT_TEXT_COLOR;
-      errorText.style.visibility = "hidden";
+      errorText.style.display = "none";
       const inputHeight = parseInt(input.style.height);
       if (inputHeight > 38) {
-        const fc = document.getElementById("sellence-popup-content-form-container");
+        const fc = document.getElementById(
+          "sellence-popup-content-form-container",
+        );
         const cc = document.getElementById("sellence-popup-content");
         cc.scrollTop = fc.scrollHeight;
         fc.style.height = "auto";
@@ -121,19 +139,18 @@
         inputTitle.style.visibility = "visible";
         if (validationFunction && !validationFunction(input.value)) {
           input.style.borderColor = INPUT_ERROR_COLOR;
-          errorText.style.visibility = "visible";
+          errorText.style.display = "inline";
         }
-        if (type === 'tel') {
+        if (type === "tel") {
           if (!input.value.startsWith("+1 ")) {
-            input.value = "+1 " + input.value.replace(/^\+1\s*/, ''); // Keeps "+1 " once
+            input.value = "+1 " + input.value.replace(/^\+1\s*/, ""); // Keeps "+1 " once
           }
         }
       } else {
         inputTitle.style.visibility = "hidden";
-        errorText.style.visibility = "hidden";
+        errorText.style.display = "none";
         input.style.borderColor = INPUT_TEXT_COLOR;
       }
-
     });
     input.addEventListener("focus", () => {
       if (!input.value && type === "tel") {
@@ -141,7 +158,7 @@
       }
       input.style.borderColor = INPUT_FOCUS_COLOR;
       inputTitle.style.visibility = "visible";
-      errorText.style.visibility = "hidden";
+      errorText.style.display = "none";
     });
     input.addEventListener("blur", () => {
       if (!input.value || input.value.trim() === "+1") {
@@ -149,7 +166,7 @@
         input.style.borderColor = INPUT_BLUR_COLOR;
         inputTitle.style.visibility = "hidden";
       }
-      errorText.style.visibility = "hidden";
+      errorText.style.display = "none";
     });
 
     result.appendChild(inputTitle);
@@ -157,28 +174,32 @@
     result.appendChild(errorText);
 
     return result;
-  }
+  };
 
   const handleSendButtonClick = async function () {
     // Call endpoint to send data https://app.sellence.com:2083/pop-up/create (POST)
-    const customer_name = formContainer.querySelector('#name').value;
-    const phone_number = formContainer.querySelector('#mobilephone').value;
-    const customer_message = formContainer.querySelector('#message').value;
-    const errorText = formContainer.querySelector('.error');
-    if (!customer_name || !phone_number || errorText.style.visibility === "visible") {
+    const customer_name = formContainer.querySelector("#name").value;
+    const phone_number = formContainer.querySelector("#mobilephone").value;
+    const customer_message = formContainer.querySelector("#message").value;
+    const errorText = formContainer.querySelector(".error");
+    if (
+      !customer_name ||
+      !phone_number ||
+      errorText.style.visibility === "visible"
+    ) {
       return;
     }
-    await fetch('https://app.sellence.com:2083/pop-up/create ', {
-      method: 'POST',
+    await fetch("https://app.sellence.com:2083/pop-up/create ", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         customer_name,
         phone_number,
         customer_message,
       }),
-    })
+    });
     formContainer.remove();
     agreement.remove();
     avatarImageContainer2.remove();
@@ -188,7 +209,7 @@
     weReceivedYourMessageContainer.innerHTML = `<span>Thank you, ${customer_name}</span>.<br> We Received your message. We’ll be reaching out via text to your number:<br> <span>${phone_number}</span>`;
     content.appendChild(weReceivedYourMessageContainer);
     sendButton.remove();
-  }
+  };
 
   const onOpenButtonClickListener = function () {
     if (isMobile) {
@@ -285,7 +306,10 @@
   headerIcon.setAttribute("viewBox", "0 0 24 24");
   headerIcon.setAttribute("fill", "none");
   const headerIconPath1 = document.createElementNS(svgNS, "path");
-  headerIconPath1.setAttribute("d", "M3.2902 15.5557C0.599657 10.559 4.21867 4.5 9.89374 4.5H14.5595C18.3926 4.5 21.5 7.60737 21.5 11.4405V11.7727C21.5 15.645 18.1972 18.6942 14.3372 18.3854L12.2307 18.2169C10.4013 18.0705 8.6663 19.0494 7.84556 20.6908C7.48306 21.4158 6.45403 21.4314 6.06974 20.7177L3.2902 15.5557Z");
+  headerIconPath1.setAttribute(
+    "d",
+    "M3.2902 15.5557C0.599657 10.559 4.21867 4.5 9.89374 4.5H14.5595C18.3926 4.5 21.5 7.60737 21.5 11.4405V11.7727C21.5 15.645 18.1972 18.6942 14.3372 18.3854L12.2307 18.2169C10.4013 18.0705 8.6663 19.0494 7.84556 20.6908C7.48306 21.4158 6.45403 21.4314 6.06974 20.7177L3.2902 15.5557Z",
+  );
   headerIconPath1.setAttribute("stroke", TEXT_COLOR);
   const headerIconPath2 = document.createElementNS(svgNS, "path");
   headerIconPath2.setAttribute("d", "M8 12H8.55");
@@ -328,7 +352,10 @@
   footerIcon.style.display = "block";
 
   const footerIconPath1 = document.createElementNS(svgNS, "path");
-  footerIconPath1.setAttribute("d", "M23.1039 18.3741C23.1039 23.8066 18.7726 27.3671 11.9086 27.3671C5.04459 27.3671 0.639883 23.7332 0.162707 17.8969H7.17353C7.24694 20.3929 8.89871 21.9713 11.7618 21.9713C14.1476 21.9713 15.726 21.0536 15.726 19.4019C15.726 18.264 14.5881 17.4198 13.0465 17.1261L8.238 16.2085C4.01682 15.4009 1.22718 12.9416 1.22718 8.68377C1.22718 3.76518 5.55847 0.314824 11.4681 0.314824C17.7448 0.314824 22.2596 3.912 22.6634 9.60141H15.6526C15.4691 7.21553 13.854 5.67388 11.5415 5.67388C9.486 5.67388 8.238 6.77506 8.238 8.20659C8.238 9.38118 9.41259 10.0786 10.8074 10.3355L15.9095 11.3266C20.6079 12.2442 23.1039 14.5567 23.1039 18.3741ZM45.3063 20.9802V27H26.6598V0.645177H45.0494V6.66494H33.5972V10.4456H43.9849V16.4654H33.5972V20.9802H45.3063ZM67.3009 27H49.2783V0.645177H56.2157V20.7233H67.3009V27ZM88.9875 27H70.9649V0.645177H77.9023V20.7233H88.9875V27ZM111.298 20.9802V27H92.6515V0.645177H111.041V6.66494H99.5889V10.4456H109.977V16.4654H99.5889V20.9802H111.298ZM132.118 27L121.62 10.5558V27H115.27V0.645177H122.721L132.448 15.8781V0.645177H138.799V27H132.118ZM155.803 27.5506C148.315 27.5506 142.405 21.5308 142.405 13.7859C142.405 6.07765 148.315 0.0945891 155.803 0.0945891C163.034 0.0945891 168.613 4.90306 169.457 11.8772H162.116C161.565 8.57365 159.106 6.29788 155.876 6.29788C151.985 6.29788 149.526 9.30777 149.526 13.7859C149.526 18.3007 151.985 21.3473 155.876 21.3473C159.069 21.3473 161.529 19.0715 162.116 15.7313H169.457C168.576 22.7788 163.034 27.5506 155.803 27.5506ZM191.7 20.9802V27H173.053V0.645177H191.443V6.66494H179.991V10.4456H190.378V16.4654H179.991V20.9802H191.7Z");
+  footerIconPath1.setAttribute(
+    "d",
+    "M23.1039 18.3741C23.1039 23.8066 18.7726 27.3671 11.9086 27.3671C5.04459 27.3671 0.639883 23.7332 0.162707 17.8969H7.17353C7.24694 20.3929 8.89871 21.9713 11.7618 21.9713C14.1476 21.9713 15.726 21.0536 15.726 19.4019C15.726 18.264 14.5881 17.4198 13.0465 17.1261L8.238 16.2085C4.01682 15.4009 1.22718 12.9416 1.22718 8.68377C1.22718 3.76518 5.55847 0.314824 11.4681 0.314824C17.7448 0.314824 22.2596 3.912 22.6634 9.60141H15.6526C15.4691 7.21553 13.854 5.67388 11.5415 5.67388C9.486 5.67388 8.238 6.77506 8.238 8.20659C8.238 9.38118 9.41259 10.0786 10.8074 10.3355L15.9095 11.3266C20.6079 12.2442 23.1039 14.5567 23.1039 18.3741ZM45.3063 20.9802V27H26.6598V0.645177H45.0494V6.66494H33.5972V10.4456H43.9849V16.4654H33.5972V20.9802H45.3063ZM67.3009 27H49.2783V0.645177H56.2157V20.7233H67.3009V27ZM88.9875 27H70.9649V0.645177H77.9023V20.7233H88.9875V27ZM111.298 20.9802V27H92.6515V0.645177H111.041V6.66494H99.5889V10.4456H109.977V16.4654H99.5889V20.9802H111.298ZM132.118 27L121.62 10.5558V27H115.27V0.645177H122.721L132.448 15.8781V0.645177H138.799V27H132.118ZM155.803 27.5506C148.315 27.5506 142.405 21.5308 142.405 13.7859C142.405 6.07765 148.315 0.0945891 155.803 0.0945891C163.034 0.0945891 168.613 4.90306 169.457 11.8772H162.116C161.565 8.57365 159.106 6.29788 155.876 6.29788C151.985 6.29788 149.526 9.30777 149.526 13.7859C149.526 18.3007 151.985 21.3473 155.876 21.3473C159.069 21.3473 161.529 19.0715 162.116 15.7313H169.457C168.576 22.7788 163.034 27.5506 155.803 27.5506ZM191.7 20.9802V27H173.053V0.645177H191.443V6.66494H179.991V10.4456H190.378V16.4654H179.991V20.9802H191.7Z",
+  );
   footerIconPath1.setAttribute("fill", "black");
   footerIcon.appendChild(footerIconPath1);
 
@@ -344,16 +371,22 @@
   avatarImage.setAttribute("fill", "none");
 
   const avatarImagePath1 = document.createElementNS(svgNS, "path");
-  avatarImagePath1.setAttribute("d", "M1.4043 15.2002V9.28682C1.4043 6.79631 3.42326 4.77734 5.91377 4.77734V4.77734C8.40428 4.77734 10.4232 6.7963 10.4232 9.28682V15.2002");
-  avatarImagePath1.setAttribute("stroke", '#46503A');
+  avatarImagePath1.setAttribute(
+    "d",
+    "M1.4043 15.2002V9.28682C1.4043 6.79631 3.42326 4.77734 5.91377 4.77734V4.77734C8.40428 4.77734 10.4232 6.7963 10.4232 9.28682V15.2002",
+  );
+  avatarImagePath1.setAttribute("stroke", "#46503A");
   avatarImagePath1.setAttribute("stroke-width", "2");
   const avatarImagePath2 = document.createElementNS(svgNS, "path");
-  avatarImagePath2.setAttribute("d", "M14.9326 15.2002V9.28682C14.9326 6.79631 16.9516 4.77734 19.4421 4.77734V4.77734C21.9326 4.77734 23.9516 6.7963 23.9516 9.28682V15.2002");
-  avatarImagePath2.setAttribute("stroke", '#46503A');
+  avatarImagePath2.setAttribute(
+    "d",
+    "M14.9326 15.2002V9.28682C14.9326 6.79631 16.9516 4.77734 19.4421 4.77734V4.77734C21.9326 4.77734 23.9516 6.7963 23.9516 9.28682V15.2002",
+  );
+  avatarImagePath2.setAttribute("stroke", "#46503A");
   avatarImagePath2.setAttribute("stroke-width", "2");
   const avatarImagePath3 = document.createElementNS(svgNS, "path");
   avatarImagePath3.setAttribute("d", "M0.76001 1.52002H25.24");
-  avatarImagePath3.setAttribute("stroke", '#46503A');
+  avatarImagePath3.setAttribute("stroke", "#46503A");
   avatarImagePath3.setAttribute("stroke-width", "2");
 
   avatarImage.appendChild(avatarImagePath1);
@@ -392,7 +425,12 @@
   content.appendChild(formTitle);
 
   const nameInput = createInputContainer("Name", "", "text");
-  const phoneInput = createInputContainer("Mobile Phone", "Invalid phone number", "tel", isValidPhoneNumber);
+  const phoneInput = createInputContainer(
+    "Mobile Phone",
+    "Invalid phone number",
+    "tel",
+    isValidPhoneNumber,
+  );
   const messageInput = createInputContainer("Message", "", "text");
 
   formContainer.appendChild(nameInput);
@@ -413,7 +451,8 @@
   messageSent.id = "sellence-popup-message-sent";
 
   const weReceivedYourMessageContainer = document.createElement("div");
-  weReceivedYourMessageContainer.className = "sellence-popup-content-form-title";
+  weReceivedYourMessageContainer.className =
+    "sellence-popup-content-form-title";
 
   const smallCloseIcon = document.createElementNS(svgNS, "svg");
   smallCloseIcon.setAttribute("width", "32");
@@ -436,7 +475,6 @@
   smallCloseIcon.appendChild(smallCloseIconPath2);
   smallCloseIcon.addEventListener("click", onCloseButtonClickListener);
 
-
   // Create the anchor tag for the SMS widget
   const anchor = document.createElement("a");
   anchor.id = "sellence-button";
@@ -448,14 +486,9 @@
   // Styles
   const style = document.createElement("style");
   style.textContent = `
-  ${isMobile && isOnTop ? `
-    #sellence-button {
-        position: fixed;
-        top: 70px;
-        right: 20px;
-        text-decoration: none;
-        z-index: 999999;
-    }` : `
+${
+    isMobile && isOnTop
+      ? `
     #sellence-button {
         position: fixed;
         bottom: 20px;
@@ -463,7 +496,15 @@
         text-decoration: none;
         z-index: 999999;
     }`
-  } 
+      : `
+    #sellence-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      text-decoration: none;
+      z-index: 999999;
+    }`
+  }
     ${
     isMobile
       ? `
@@ -589,7 +630,7 @@
       color: ${INPUT_TEXT_COLOR};
     }
     .error {
-      visibility: hidden;
+      display: none;
       font-family: 'Poppins', sans-serif;
       font-size: 11px;
       font-weight: 400;
@@ -678,40 +719,40 @@
     const existingButton = document.getElementById("sellence-button");
     const existingPopUp = document.getElementById("sellence-popup-wrapper");
 
-    // if (isPageExcluded(window.location.href)) {
-    //   if (existingButton) {
-    //     existingButton.remove();
-    //   }
-    //   if (existingPopUp) {
-    //     existingPopUp.remove();
-    //   }
-    // } else {
-    //   if (!existingButton) {
-    //     if(isOnTopPage(window.location.href) && isMobile) {
-    //       anchor.style.top = "70px";
-    //       anchor.style.bottom = "auto";
-    //     } else {
-    //       anchor.style.bottom = "20px";
-    //       anchor.style.top = "auto";
-    //     }
-    //     document.body.appendChild(anchor);
-    //   }
-    // }
-    if (isPageIncluded(window.location.href)) {
-      if (!existingButton) {
-
-        document.body.appendChild(anchor);
-      }
-    } else {
+    if (isPageExcluded(window.location.href)) {
       if (existingButton) {
         existingButton.remove();
       }
       if (existingPopUp) {
         existingPopUp.remove();
       }
+    } else {
+      if (existingButton) {
+        existingButton.remove();
+      }
+      if (isOnTopPage(window.location.href) && isMobile) {
+        anchor.style.top = "70px";
+        anchor.style.bottom = "auto";
+      } else {
+        anchor.style.bottom = "20px";
+        anchor.style.top = "auto";
+      }
+      document.body.appendChild(anchor);
     }
+    //   if (isPageIncluded(window.location.href)) {
+    //     if (!existingButton) {
+    //
+    //       document.body.appendChild(anchor);
+    //     }
+    //   } else {
+    //     if (existingButton) {
+    //       existingButton.remove();
+    //     }
+    //     if (existingPopUp) {
+    //       existingPopUp.remove();
+    //     }
+    //   }
   }
-
 
   document.head.appendChild(style);
 
