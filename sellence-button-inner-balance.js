@@ -125,7 +125,7 @@
 
     input.addEventListener("input", () => {
       input.style.borderColor = INPUT_TEXT_COLOR;
-      errorText.style.visibility = "hidden";
+      errorText.style.display = "none";
       const inputHeight = parseInt(input.style.height);
       if (inputHeight > 38) {
         const fc = document.getElementById(
@@ -139,7 +139,7 @@
         inputTitle.style.visibility = "visible";
         if (validationFunction && !validationFunction(input.value)) {
           input.style.borderColor = INPUT_ERROR_COLOR;
-          errorText.style.visibility = "visible";
+          errorText.style.display = "inline";
         }
         if (type === "tel") {
           if (!input.value.startsWith("+1 ")) {
@@ -148,7 +148,7 @@
         }
       } else {
         inputTitle.style.visibility = "hidden";
-        errorText.style.visibility = "hidden";
+        errorText.style.display = "none";
         input.style.borderColor = INPUT_TEXT_COLOR;
       }
     });
@@ -158,7 +158,7 @@
       }
       input.style.borderColor = INPUT_FOCUS_COLOR;
       inputTitle.style.visibility = "visible";
-      errorText.style.visibility = "hidden";
+      errorText.style.display = "none";
     });
     input.addEventListener("blur", () => {
       if (!input.value || input.value.trim() === "+1") {
@@ -166,7 +166,7 @@
         input.style.borderColor = INPUT_BLUR_COLOR;
         inputTitle.style.visibility = "hidden";
       }
-      errorText.style.visibility = "hidden";
+      errorText.style.display = "none";
     });
 
     result.appendChild(inputTitle);
@@ -630,7 +630,7 @@ ${
       color: ${INPUT_TEXT_COLOR};
     }
     .error {
-      visibility: hidden;
+      display: none;
       font-family: 'Poppins', sans-serif;
       font-size: 11px;
       font-weight: 400;
@@ -716,7 +716,6 @@ ${
   `;
 
   function handleLocationChange() {
-    console.log("Location changed", window.location.href);
     const existingButton = document.getElementById("sellence-button");
     const existingPopUp = document.getElementById("sellence-popup-wrapper");
 
