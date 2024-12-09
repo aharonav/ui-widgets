@@ -8,7 +8,8 @@
   }
 
   // Constants can be changed to customize the SMS widget
-  const TITLE = "Quick answer via text";
+  //const TITLE = "Quick answer via text";
+  const TITLE = "Talk to an Expert 24/7";
   const PHONE_NUMBER = "+12137996421";
   const SELLENCE_URL =
     "https://sellence.com/?utm_source=innerbalance&utm_medium=widget&utm_campaign=1";
