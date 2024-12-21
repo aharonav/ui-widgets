@@ -732,7 +732,7 @@ ${
         existingButton.remove();
       }
       if (isOnTopPage(window.location.href) && isMobile) {
-        anchor.style.top = "70px";
+        anchor.style.top = "160px";
         anchor.style.bottom = "auto";
       } else {
         anchor.style.bottom = "20px";
