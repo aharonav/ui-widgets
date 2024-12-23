@@ -160,14 +160,12 @@
       input.style.borderColor = `${INPUT_FOCUS_COLOR} !important`;
       inputTitle.style.visibility = "visible";
       errorText.style.display = "none";
-      input.placeholder = ''
     });
     input.addEventListener("blur", () => {
       if (!input.value || input.value.trim() === "+1") {
         input.value = "";
         input.style.borderColor = INPUT_BLUR_COLOR;
         inputTitle.style.visibility = "hidden";
-        input.placeholder = title;
       }
       errorText.style.display = "none";
     });
