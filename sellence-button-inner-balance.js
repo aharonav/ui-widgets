@@ -617,12 +617,13 @@ ${
       color: ${INPUT_FOCUS_COLOR};
     }
     .sellence-input {
+      unset: all;
       display: inline-block;
       box-sizing: border-box;
       height: 34px;
       width: 100%;
-      border: none;
-      border-bottom: 2px solid ${INPUT_BLUR_COLOR};
+      border: none !important;
+      border-bottom: 2px solid ${INPUT_BLUR_COLOR} !important;
       outline: none;
       padding: 7px 0;
       font-family: 'Poppins', sans-serif;
