@@ -157,9 +157,10 @@
       if (!input.value && type === "tel") {
         input.value = "+1 ";
       }
-      input.style.borderColor = INPUT_FOCUS_COLOR;
+      input.style.borderColor = `${INPUT_FOCUS_COLOR} !important`;
       inputTitle.style.visibility = "visible";
       errorText.style.display = "none";
+      input.placeholder = ''
     });
     input.addEventListener("blur", () => {
       if (!input.value || input.value.trim() === "+1") {
@@ -624,7 +625,7 @@ ${
       border: none !important;
       border-bottom: 2px solid ${INPUT_BLUR_COLOR} !important;
       outline: none;
-      padding: 7px 0;
+      padding: 7px 0 !important;
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
       font-weight: 500;
