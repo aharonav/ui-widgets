@@ -617,7 +617,6 @@ ${
       color: ${INPUT_FOCUS_COLOR};
     }
     .sellence-input {
-      unset: all;
       display: inline-block;
       box-sizing: border-box;
       height: 34px;
