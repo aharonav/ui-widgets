@@ -167,6 +167,7 @@
         input.value = "";
         input.style.borderColor = INPUT_BLUR_COLOR;
         inputTitle.style.visibility = "hidden";
+        input.placeholder = title;
       }
       errorText.style.display = "none";
     });
