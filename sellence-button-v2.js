@@ -8,7 +8,8 @@
   }
 
   // Constants can be changed to customize the SMS widget
-  const TITLE = "Quick answer via text";
+  //const TITLE = "Quick answer via text";
+  const TITLE = "Talk to an Expert 24/7";
   const PHONE_NUMBER = "+12137996421";
   const SELLENCE_URL =
     "https://sellence.com/?utm_source=innerbalance&utm_medium=widget&utm_campaign=1";
@@ -96,16 +97,16 @@
     validationFunction,
   ) {
     const result = document.createElement("div");
-    result.className = "input-container";
+    result.className = "sellence-input-container";
 
     const inputTitle = document.createElement("span");
-    inputTitle.className = "input-title";
+    inputTitle.className = "sellence-input-title";
     inputTitle.textContent = title;
 
     const input = document.createElement(
       title === "Message" ? "textarea" : "input",
     );
-    input.className = "input";
+    input.className = "sellence-input";
     input.id = title.replace(" ", "").toLowerCase();
     input.type = type;
     input.placeholder = title;
@@ -120,7 +121,7 @@
     }
 
     const errorText = document.createElement("span");
-    errorText.className = "error";
+    errorText.className = "sellence-error";
     errorText.textContent = error;
 
     input.addEventListener("input", () => {
@@ -239,7 +240,7 @@
 
   // Create the button wrapper
   const buttonWrapper = document.createElement("div");
-  buttonWrapper.id = "wrap";
+  buttonWrapper.id = "sellence-wrap";
 
   // Create the button icon
   const buttonIconOpen = document.createElementNS(svgNS, "svg");
@@ -410,7 +411,7 @@
   formContainer.id = "sellence-popup-content-form-container";
 
   const inputContainer = document.createElement("div");
-  inputContainer.className = "input-container";
+  inputContainer.className = "sellence-input-container";
 
   const agreement = document.createElement("p");
   agreement.id = "sellence-popup-content-agreement";
@@ -604,18 +605,18 @@ ${
       padding: 24px;
       align-self: flex-start;
     }
-    .input-container {
+    .sellence-input-container {
       display: flex;
       flex-direction: column;
     }
-    .input-title {
+    .sellence-input-title {
       visibility: hidden;
       font-family: 'Poppins', sans-serif;
       font-size: 11px;
       font-weight: 400;
       color: ${INPUT_FOCUS_COLOR};
     }
-    .input {
+    .sellence-input {
       display: inline-block;
       box-sizing: border-box;
       height: 34px;
@@ -629,7 +630,7 @@ ${
       font-weight: 500;
       color: ${INPUT_TEXT_COLOR};
     }
-    .error {
+    .sellence-error {
       display: none;
       font-family: 'Poppins', sans-serif;
       font-size: 11px;
@@ -698,7 +699,7 @@ ${
       font-weight: 400;
       word-break:break-word;
     }
-    #wrap {
+    #sellence-wrap {
         min-width: 62px;
         max-width: 62px;
         min-height: 62px;
