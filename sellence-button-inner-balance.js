@@ -182,7 +182,7 @@
     const customer_name = formContainer.querySelector("#name").value;
     const phone_number = formContainer.querySelector("#mobilephone").value;
     const customer_message = formContainer.querySelector("#message").value;
-    const errorText = formContainer.querySelector(".error");
+    const errorText = formContainer.querySelector(".sellence-error");
     if (
       !customer_name ||
       !phone_number ||
