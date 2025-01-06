@@ -207,7 +207,7 @@
     messageSent.textContent = customer_message;
     content.appendChild(messageSent);
     content.appendChild(avatarImageContainer2);
-    weReceivedYourMessageContainer.innerHTML = `<span>Thank you, ${customer_name}</span>.<br> We Received your message. We’ll be reaching out via text to your number:<br> <span>${phone_number}</span>`;
+    weReceivedYourMessageContainer.innerHTML = `<span>Thank you, ${customer_name}</span>.<br> We Received your message and will be reaching out via text to your number:<br> <span>${phone_number}</span> within 4-6 hours.`;
     content.appendChild(weReceivedYourMessageContainer);
     sendButton.remove();
   };
