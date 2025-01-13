@@ -24,10 +24,10 @@
   const EXCLUDED_URLS = [
     "https://www.innerbalance.com/pre-questionnaire",
     "https://www.innerbalance.com/onboarding-questionnaire",
+    "https://www.innerbalance.com/checkout",
   ];
   // const INCLUDE_URLS = ["https://www.innerbalance.com/learn", "localhost:8888"];
   const ON_TOP_URLS = [
-    "https://www.innerbalance.com/checkout",
     "localhost:8888",
   ];
   let usefulWindowHeight = window.innerHeight - 120;
