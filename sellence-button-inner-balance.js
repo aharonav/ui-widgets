@@ -12,9 +12,15 @@
   }
   gtag('js', new Date());
 
-  gtag('config', 'G-1RGYN3KY3Z', {
-    'page_path': window.location.pathname,
-  });
+  gtag('config', 'G-1RGYN3KY3Z');
+  
+  function trackButtonDisplay(siteName) {
+    gtag('event', 'button_display', {
+      'event_category': 'Button',
+      'event_label': siteName, // Replace with site-specific name
+      'value': 1
+    });
+  }
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
@@ -229,6 +235,11 @@
   };
 
   const onOpenButtonClickListener = function () {
+    gtag('event', 'button_click', {
+      'event_category': 'Button',
+      'event_label': window.location.hostname, // Captures the domain of the website
+      'value': 1
+    });
     if (isMobile) {
       header.appendChild(smallCloseIcon);
       anchor.style.visibility = "hidden";
@@ -754,6 +765,7 @@ ${
         anchor.style.bottom = "20px";
         anchor.style.top = "auto";
       }
+      trackButtonDisplay(window.location.hostname);
       document.body.appendChild(anchor);
     }
     //   if (isPageIncluded(window.location.href)) {
