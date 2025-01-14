@@ -1,4 +1,20 @@
-(function () {
+(function () {  
+  // Google Analytics
+  const gaScript = document.createElement("script");
+  gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-1RGYN3KY3Z";
+  gaScript.async = true;
+  document.head.appendChild(gaScript);
+
+  // Initialize Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-1RGYN3KY3Z', {
+    'page_path': window.location.pathname,
+  });
   // Check if the device is mobile
   function detectDevice() {
     let ch = false;
