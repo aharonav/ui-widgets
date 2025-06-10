@@ -38,7 +38,7 @@
   const TERMS_URL = "https://evinature.com/terms-and-conditions/";
   const BUTTON_TEXT = "Send";
   const TEXT_COLOR = "#FFFFFF";
-  const BACKGROUND_COLOR = "#CAAF91";
+  const BACKGROUND_COLOR = "#43D4C2";
   const INPUT_TEXT_COLOR = "#707070";
   const INPUT_ERROR_COLOR = "#F63C45";
   const INPUT_BLUR_COLOR = "#E9F0FD";
